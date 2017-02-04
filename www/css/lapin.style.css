@@ -1,0 +1,88 @@
+
+.banner{
+  width: 100%;
+  height:100px;
+  background-image: url('../img/banner.png');
+  background-size: 95% 72px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.logo{
+  width: 100px;
+  height: 150px;
+  background-image: url('');
+  background-size: 95% 72px;
+}
+hr{
+  border-style: dashed;
+  border-width: 1px;
+  color:#BF6A27;
+}
+.banner p{
+  font-family: 'pacifico';
+  text-align: center;
+  font-size: 1.5em;
+  padding-top: 30px;
+}
+.desc{
+  font-size: 1.2em;
+  text-align: justify;
+}
+.wrapper{
+  width: 95%;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.favicon{
+  width: 80px;
+  height: 80px;
+  float: left;
+}
+#homeAuthor{
+  float: left;
+}
+.banniere{
+  width:100%;
+  height: 150px;
+}
+.wrapperStrip{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.stripZone{
+  width: 33.33%;
+  padding: 7px;
+  float: left;
+  border: solid 1px #CAC5B8;
+
+}
+.stripZone p{
+  text-align: center;
+}
+.strip{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.stripsTitle{
+  font-size: 1em;
+  text-align: right;
+
+}
+.wrapperAuthor, .storiesZone{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 1px #CAC5B8;
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 15px;
+}
+.stripTitle{
+  text-align: center;
+  font-size: 1.5em;
+  color:#BF6A27;
+}

@@ -1,1 +1,22 @@
-/* Empty. Add your own CSS if you like */
+ion-content{
+  background-color: #F6F6E6;
+}
+.font{
+  font-family: 'pacifico';
+}
+.lapinColor{
+  color:#BE6414;
+}
+.title{
+  font-size: 1.5em;
+}
+@font-face {
+    font-family: pacifico;
+    src: url(font/Pacifico.ttf);
+}
+.padding{
+  background-color: #F6F6E6;
+}
+.center{
+  text-align: center;
+}

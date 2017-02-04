@@ -1,0 +1,24 @@
+<ion-view  view-title='{{domain}}'>
+  <ion-content class="padding">
+<div class='wrapperAuthor'>
+  <div class="banImageDomain">
+    <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>
+  </div>
+  <p class='desc'>{{info.description}}</p>
+  <p>par <strong> {{info.author}}</strong></p>
+</div>
+<div class='storiesZone' >
+  <ul>
+    <li class='font lapinColor' ng-click='test(0)'>- Tout les Strips</li>
+    <li ng-click='test({{storie.id}})' class='font lapinColor'ng-repeat='storie in stories'> - {{storie.title}}</li>
+  <li>
+</div>
+  <div class='wrapperStrip'>
+    <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-id'"/>
+    <p class='font lapinColor stripsTitle'>{{strips.title}} </p>
+      <img class='strip' ui-sref="strip({domain: domain, id:strips.id})"src="data:image/jpeg;base64,{{strips.file}}"/>
+    <div/>
+  </div>
+  <hr>
+  </ion-content>
+</ion-view>
