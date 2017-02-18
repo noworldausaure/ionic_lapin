@@ -9,16 +9,17 @@
 </div>
 <div class='storiesZone' >
   <ul>
-    <li class='font lapinColor' ng-click='test(0)'>- Tout les Strips</li>
-    <li ng-click='test({{storie.id}})' class='font lapinColor'ng-repeat='storie in stories'> - {{storie.title}}</li>
+    <li class='font lapinColor' ng-click='changeStrip(0)'>- Tout les Strips</li>
+    <li ng-click='changeStrip({{storie.id}})' class='font lapinColor'ng-repeat='storie in stories'> - {{storie.title}}</li>
   <li>
 </div>
   <div class='wrapperStrip'>
-    <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-id'"/>
+    <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-date'"/>
     <p class='font lapinColor stripsTitle'>{{strips.title}} </p>
-      <img class='strip' ui-sref="strip({domain: domain, id:strips.id})"src="data:image/jpeg;base64,{{strips.file}}"/>
-    <div/>
+    <div class='wrapperStripDomain'>
+      <img class='strip' ui-sref="strip({domain: domain, id:strips.index})"src="data:image/jpeg;base64,{{strips.file}}"/>
+    </div>
   </div>
-  <hr>
+  </div>
   </ion-content>
 </ion-view>

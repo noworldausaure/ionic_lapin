@@ -1,28 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
-
 .controller('HomeCtrl', function($scope,$http, Home) {
-  var url = Home.url() + 'infoGeneral';
-  $http.get(url).success(function(data){
-    console.log(data);
-    $scope.data = data;
-  });
 
+  $scope.domain = Home.returnDomain($http)
+
+  $scope.domain.then(function(domain){
+    $scope.dataDomain = domain.data;
+  })
 })
 
-.controller('DomainCtrl', function($scope, $http, Home, $stateParams) {
+.controller('DomainCtrl', function($scope,$rootScope, $http, Home, $stateParams) {
   var domain = $stateParams.domain;
   $scope.domain = domain;
+  $rootScope.idStories = 0;
 
   //FUNCTION GET ALL STRIPS
-  var allStrips = function(){
-  var url = Home.url()+ 'strips/'+domain;
-  $http.get(url).success(function(strips){
-    $scope.stripData = strips;
-  });
-}
-  allStrips();
   //GET INFO domain
   var url = Home.url()+ 'info/'+domain;
   $http.get(url).success(function(info){
@@ -36,52 +28,122 @@ angular.module('starter.controllers', [])
     $scope.stories = stories;
   });
 
-  //SWITCH STRIP FUNCTION
-  $scope.test = function(id){
-    if(id == 0){
-      allStrips();
-    }
-    var url = Home.url()+'/strips/stories/' + domain + '/' + id;
-    $http.get(url).success(function(strips){
-      console.log(strips);
-      $scope.stripData = strips;
-    });
-  }
-})
-
-.controller('StripCtrl', function($scope, $http, Home, $stateParams) {
-  var domain = $stateParams.domain;
-  var id = $stateParams.id;
-  var url = Home.url()+ 'strips/'+domain+'/'+id;
-  $http.get(url).success(function(strip){
-    console.log(strip);
-    $scope.strip = strip[0];
+  $scope.DataStrips = Home.returnAllStrips($http,domain)
+  $scope.DataStrips.then(function(strips){
+    $scope.stripData = addIndex(strips.data);
   })
-})
-.controller('TabCtrl', function($scope,$stateParams) {
+
+  //SWITCH STRIP FUNCTION
+  $scope.changeStrip = function(id){
+      $rootScope.idStories = id;
+      if($rootScope.idStories == 0){
+        $scope.DataStrips = Home.returnAllStrips($http,domain)
+      } else{
+        $scope.DataStrips = Home.returnStripsByStories($http,domain,$rootScope.idStories)
+      }
+      $scope.DataStrips.then(function(strips){
+        $scope.stripData = addIndex(strips.data);
+      })
+    }
+
+    function addIndex(array){
+    for(i=0; i < array.length; i++){
+      array[i]['index'] = i;
+    }
+    return array;
+  }
+
+
+
+
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('StripCtrl', function($scope,$ionicPopup, $rootScope, $http, Home, $stateParams, $ionicSlideBoxDelegate) {
+  var index = $stateParams.id;
+  var idStories = $rootScope.idStories;
+  var domain = $stateParams.domain;
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
+ $scope.data = {};
+ $scope.data.strips = [];
+ $scope.data.currentPage = 1;
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+ function addIndex(array){
+ for(i=0; i < array.length; i++){
+   array[i]['index'] = i;
+ }
+ return array;
+}
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+if(idStories == 0){
+  $scope.DataStrips = Home.returnAllStrips($http,domain)
+}else{
+ $scope.DataStrips = Home.returnStripsByStories($http,domain,idStories)
+}
+ $scope.DataStrips.then(function(strips){
+   console.log(strips.data);
+   $scope.data.strips = addIndex(strips.data);
+  //  var indexIncr = index + 1;
+  //  $scope.data.strips.push(strips.data[indexIncr]);
+  //  var indexDecr = index - 1 ;
+  //  $scope.data.strips.unshift(strips.data[indexDecr]);
+
+   console.log($scope.data.strips)
+ })
+
+ var setupSlider = function() {
+   //some options to pass to our slider
+   $scope.data.options = {
+     initialSlide: 1,
+     direction: 'horizontal', //or vertical
+     speed: 300 //0.3s transition
+   };
+}
+  $scope.data.sliderDelegate = null;
+    var count = 0;
+    //watch our sliderDelegate reference, and use it when it becomes available
+    $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+      if (newVal != null) {
+        $scope.data.sliderDelegate.on('slideChangeEnd', function() {
+          $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
+            // popup();
+            console.log($scope.data.sliderDelegate.activeIndex)
+            $scope.DataStrips.then(function(strips){
+          })
+
+          //use $scope.$apply() to refresh any content external to the slider
+          $scope.$apply();
+        });
+      }
+    });
+
+  setupSlider();
+
+  function popup() {
+     $scope.data = {}
+
+     // Custom popup
+     var myPopup = $ionicPopup.show({
+        template: '<input type = "text" ng-model = "data.model">',
+        title: 'Title',
+        subTitle: 'Subtitle',
+        scope: $scope,
+
+        buttons: [
+           { text: 'Cancel' }, {
+              text: '<b>Save</b>',
+              type: 'button-positive',
+                 onTap: function(e) {
+
+                    if (!$scope.data.model) {
+                       //don't allow the user to close unless he enters model...
+                          e.preventDefault();
+                    } else {
+                       return $scope.data.model;
+                    }
+                 }
+           }
+        ]
+     });
+   }
+    //  popup();
 });

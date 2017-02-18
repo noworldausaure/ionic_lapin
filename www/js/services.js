@@ -1,19 +1,20 @@
 angular.module('starter.services', [])
-.factory('Home', function(){
+
+
+.factory('Home', function($http){
+  var url =  'http://localhost/API_Lapin/api/'
   return {
     url: function() {
       return 'http://localhost/API_Lapin/api/';
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    returnDomain($http) {
+      return $http.get(url + 'infoGeneral');
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
+    returnAllStrips($http,domain){
+      return $http.get(url + 'strips/'+domain);
+    },
+    returnStripsByStories($http,domain,id){
+      return $http.get(url +'/strips/stories/' + domain + '/' + id);
     }
-  };
+  }
 });

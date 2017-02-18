@@ -51,7 +51,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('strip', {
     url: '/strips/:domain/:id',
     templateUrl: 'templates/strip.html',
-    controller:'StripCtrl'
+    controller:'StripCtrl',
+    cache: false
   })
   // Each tab has its own nav history stack:
 

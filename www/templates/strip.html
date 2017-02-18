@@ -1,13 +1,17 @@
-<ion-view  view-title='{{strip.title}}'>
+<ion-view  view-title=''>
 
   <ion-content class="padding">
+   <!-- <p class='stripTitle font'>{{strip.title}}</p> -->
 
-  <div class='wrapperStrip'>
-    <div id='stripZone'/>
-      <p class='stripTitle font'>{{strip.title}}</p>
-      <img class='strip' src="data:image/jpeg;base64,{{strip.file}}"/>
-    <div/>
-  </div>
+
+  <ion-slides show-pager="true" options="data.options" slider="data.sliderDelegate">
+    <ion-slide-page ng-repeat="strip in data.strips">
+      <div class='strips_{{strip.index}}'>
+        <img class='strip' ng-src="data:image/jpeg;base64,{{strip.file}}" height="100%" width="100%"/>
+      </div>
+    </ion-slide-page>
+  </ion-slides>
+
 
   </ion-content>
 </ion-view>

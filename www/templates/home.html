@@ -5,8 +5,8 @@
     </div>
     <hr class='decoHr'>
   <div class='wrapper'>
-      <div ng-repeat="datas in data">
-            <img class='favicon' ui-sref="strips({domain: datas.short_name})" src='data:image/jpeg;base64,{{datas.favicon}}'/>
+      <div ng-repeat="domain in dataDomain">
+            <img class='favicon' ui-sref="strips({domain: domain.short_name})" src='data:image/jpeg;base64,{{domain.favicon}}'/>
           <!-- <div id='homeAuthor'>
             <ul>
               <li>{{datas.large_name}}</li>
