@@ -35,18 +35,18 @@ angular.module('starter.controllers', [])
 
   //SWITCH STRIP FUNCTION
   $scope.changeStrip = function(id){
-      $rootScope.idStories = id;
-      if($rootScope.idStories == 0){
-        $scope.DataStrips = Home.returnAllStrips($http,domain)
-      } else{
-        $scope.DataStrips = Home.returnStripsByStories($http,domain,$rootScope.idStories)
-      }
-      $scope.DataStrips.then(function(strips){
-        $scope.stripData = addIndex(strips.data);
-      })
+    $rootScope.idStories = id;
+    if($rootScope.idStories == 0){
+      $scope.DataStrips = Home.returnAllStrips($http,domain)
+    } else{
+      $scope.DataStrips = Home.returnStripsByStories($http,domain,$rootScope.idStories)
     }
+    $scope.DataStrips.then(function(strips){
+      $scope.stripData = addIndex(strips.data);
+    })
+  }
 
-    function addIndex(array){
+  function addIndex(array){
     for(i=0; i < array.length; i++){
       array[i]['index'] = i;
     }
@@ -63,87 +63,108 @@ angular.module('starter.controllers', [])
   var idStories = $rootScope.idStories;
   var domain = $stateParams.domain;
 
- $scope.data = {};
- $scope.data.strips = [];
- $scope.data.currentPage = 1;
+  $scope.data = {};
+  $scope.data.bgColors = [];
+  $scope.file = 0;
+  $scope.title;
+  $scope.link=0;
 
- function addIndex(array){
- for(i=0; i < array.length; i++){
-   array[i]['index'] = i;
- }
- return array;
-}
+  Domainpub = Home.returnPubByDomain($http,domain);
+  Lapinpub = Home.returnLapinPub($http)
 
-if(idStories == 0){
+  if(idStories == 0){
   $scope.DataStrips = Home.returnAllStrips($http,domain)
-}else{
- $scope.DataStrips = Home.returnStripsByStories($http,domain,idStories)
+  } else {
+  $scope.DataStrips = Home.returnStripsByStories($http,domain,idStories)
 }
- $scope.DataStrips.then(function(strips){
-   console.log(strips.data);
-   $scope.data.strips = addIndex(strips.data);
-  //  var indexIncr = index + 1;
-  //  $scope.data.strips.push(strips.data[indexIncr]);
-  //  var indexDecr = index - 1 ;
-  //  $scope.data.strips.unshift(strips.data[indexDecr]);
 
-   console.log($scope.data.strips)
- })
+  $scope.DataStrips.then(function(strips){
+    $scope.title = strips.data[index].title;
+    $scope.file = strips.data[index].file;
+    for (var i = 0; i < strips.data.length; i++) {
+      $scope.data.bgColors.push("bgColor_" + i);
+    }
+  })
 
- var setupSlider = function() {
-   //some options to pass to our slider
-   $scope.data.options = {
-     initialSlide: 1,
-     direction: 'horizontal', //or vertical
-     speed: 300 //0.3s transition
-   };
-}
-  $scope.data.sliderDelegate = null;
+  var setupSlider = function() {
+    //some options to pass to our slider
+    $scope.data.sliderOptions = {
+      initialSlide: 2,
+      direction: 'horizontal', //or vertical
+      speed: 300 //0.3s transition
+    };
+
+    //create delegate reference to link with slider
+    $scope.data.sliderDelegate = null;
     var count = 0;
+    var pubDomain = true;
+    var randomPub = 0;
+    var oldPrevious;
+
     //watch our sliderDelegate reference, and use it when it becomes available
     $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
       if (newVal != null) {
-        $scope.data.sliderDelegate.on('slideChangeEnd', function() {
+        $scope.data.sliderDelegate.on('slideChangeStart', function() {
+          console.log('Previous Index : '+$scope.data.sliderDelegate.previousIndex)
           $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
-            // popup();
-            console.log($scope.data.sliderDelegate.activeIndex)
-            $scope.DataStrips.then(function(strips){
-          })
+          console.log('Current page:' + $scope.data.currentPage)
+          console.log(newVal)
 
+
+          if(count == 2 && pubDomain){
+            Domainpub.then(function(pub){
+              if(pub.data.length != 1){
+                 randomPub = Math.floor((Math.random() * pub.data.length) + 0)
+              }
+              else{
+                 randomPub = 0;
+              }
+              console.log('random ' +randomPub)
+              $scope.file = pub.data[randomPub].file;
+              $scope.link = pub.data[randomPub].link;
+              $scope.title = pub.data[randomPub].name;
+
+              console.log('ok');
+              pubDomain = false;
+              count++;
+            })
+          }
+          else if(count == 10){
+
+            Lapinpub.then(function(pub){
+              if(pub.data.length != 1){
+                 randomPub = Math.floor((Math.random() * pub.data.length) + 1)
+              }
+              else{
+                 randomPub = 0;
+              }
+              $scope.file = pub.data[randomPub].file;
+              $scope.link = pub.data[randomPub].link;
+              $scope.title = pub.data[randomPub].name;
+
+            })
+            count = 0;
+          }
+          else{
+          $scope.DataStrips.then(function(strips){
+
+            $scope.file = strips.data[$scope.data.currentPage].file;
+            $scope.title = strips.data[$scope.data.currentPage].title;
+            $scope.link = '#/strips/absurdo/' + $scope.data.currentPage;
+
+            count++;
+            console.log('compte ' + count)
+
+          })
+          oldPrevious = $scope.data.sliderDelegate.previousIndex
+          console.log(oldPrevious);
+        }
           //use $scope.$apply() to refresh any content external to the slider
           $scope.$apply();
         });
       }
     });
-
+  };
   setupSlider();
 
-  function popup() {
-     $scope.data = {}
-
-     // Custom popup
-     var myPopup = $ionicPopup.show({
-        template: '<input type = "text" ng-model = "data.model">',
-        title: 'Title',
-        subTitle: 'Subtitle',
-        scope: $scope,
-
-        buttons: [
-           { text: 'Cancel' }, {
-              text: '<b>Save</b>',
-              type: 'button-positive',
-                 onTap: function(e) {
-
-                    if (!$scope.data.model) {
-                       //don't allow the user to close unless he enters model...
-                          e.preventDefault();
-                    } else {
-                       return $scope.data.model;
-                    }
-                 }
-           }
-        ]
-     });
-   }
-    //  popup();
 });

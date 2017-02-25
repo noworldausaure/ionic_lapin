@@ -15,6 +15,12 @@ angular.module('starter.services', [])
     },
     returnStripsByStories($http,domain,id){
       return $http.get(url +'/strips/stories/' + domain + '/' + id);
+    },
+    returnPubByDomain($http,domain){
+        return $http.get(url + '/pub/domain/'+domain )
+    },
+    returnLapinPub($http,domain){
+        return $http.get(url + '/pub/general' )
     }
   }
 });
