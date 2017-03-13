@@ -64,32 +64,82 @@ angular.module('starter.controllers', ['ksSwiper'])
     }
     return array;
   }
-
-
-
-
-
 })
 
 
-.controller('StripCtrl', function($scope,$ionicPopup, $rootScope, $http, Home, $stateParams, $ionicSlideBoxDelegate) {
-  $scope.index = $stateParams.id;
+.controller('StripCtrl', function($scope,$ionicPopup,$location, $rootScope, $http, Home, $stateParams, $ionicSlideBoxDelegate) {
   var idStories = $rootScope.idStories;
   var domain = $stateParams.domain;
-
+  var count = 0;
+  var pubDomain = false;
+  $scope.changeClass = true
+  $scope.index = $stateParams.id;
   $scope.data = {}
   $scope.data.bgColors = []
-  console.log($rootScope.images)
-  Domainpub = Home.returnPubByDomain($http,domain);
-  Lapinpub = Home.returnLapinPub($http)
+  $scope.noSwipping;
 
+  Domainpub = Home.returnPubByDomain($http,domain)
+  Lapinpub = Home.returnLapinPub($http)
   $scope.swiper = {};
 
-      $scope.onReadySwiper = function (swiper) {
+   $scope.onReadySwiper = function (swiper) {
+     console.log(swiper)
+     swiper.on('slideChangeStart', function () {
+       count++;
+       console.log(swiper.activeIndex);
+       console.log(count);
+       if(count == 2 && !pubDomain){
+         Domainpub.then(function(data){
+           var u = Math.floor((Math.random() * data.data.length) + 0);
+           showConfirm(data.data[u]);
+           pubDomain = true;
+         })
+       }
+       if(count == 10){
+        Lapinpub.then(function(data){
+          var u = Math.floor((Math.random() * data.data.length) + 0);
+          showConfirm(data.data[u]);
+        })
+        count = 0;
+       }
+     });
+   };
 
-        swiper.on('slideChangeStart', function () {
+   showConfirm = function(data) {
+   var confirmPopup = $ionicPopup.confirm({
+     title: '<p class=font lapinColor>'+data.name+'</p>',
+     template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
+     cancelText:'Retour',
+    okText:'Plus d\'info',
+   });
 
-          console.log('slideChangeStart');
-        });
-      };
+   confirmPopup.then(function(res) {
+     if(res) {
+        window.open(data.link,'_system')
+     }
+   });
+ };
+
+  //  var showPopup = function(data) {
+  //    $scope.data = {}
+
+     // Custom popup
+    //  var myPopup = $ionicPopup.confirm({
+    //     template:
+    //     title: data.name,
+    //     subTitle: 'Chez lapin',
+    //     scope: $scope,
+     //
+    //     buttons: [
+    //        { text: 'Retour' }, {
+    //           text: '<b>Plus d\'info</b>',
+    //           type: 'button-positive',
+    //        }
+    //     ]
+    //  });
+    //  myPopup.then(function(res) {
+    //     console.log('Tapped!', res);
+    //  });
+  // });
+// })
 })

@@ -29,3 +29,19 @@ ion-content{
   width: 100%;
   height: 100px;
 }
+.display{
+  display: none;
+}
+.button{
+  width: 100%;
+}
+.buyButton{
+  width: 45%;
+  background-color: #F6F6E6;
+  font-family: pacifico;
+
+}
+.imgPopUp{
+  width: 100%;
+  
+}
