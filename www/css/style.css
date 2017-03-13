@@ -10,6 +10,11 @@ ion-content{
 .title{
   font-size: 1.5em;
 }
+.titleStrip{
+  font-size: 1.5em;
+  font-family: pacifico;
+  color:
+}
 @font-face {
     font-family: pacifico;
     src: url(font/Pacifico.ttf);

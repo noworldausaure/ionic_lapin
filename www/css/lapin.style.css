@@ -89,20 +89,22 @@ hr{
   font-size: 1.5em;
   color:#BF6A27;
 }
-.slide{
-  width: 100%;
-  height: 100%;
+.swiper-container {
+    width: 100%;
 }
-
-.box h1{
-  font-family: 'pacifico';
-  text-align: center;
-  font-size: 1.5em;
-  color:#BF6A27;
+.strips0{
+  background-color: red;
+  height: 800px;
 }
-.box{
-  height: 100%;
+.strips1{
+  background-color: blue;
+  height: 800px;
 }
-ion-slides{
-  height: 100vh !important;
+.strips2{
+  background-color: green;
+  height: 800px;
+}
+.strips3{
+  background-color: black;
+  height: 800px;
 }

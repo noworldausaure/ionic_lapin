@@ -1,16 +1,14 @@
 <ion-view  view-title=''>
 
   <ion-content class="padding">
-   <ion-slides slider="data.sliderDelegate">
-     <ion-slide-page ng-repeat="bgColor in data.bgColors" initialSlide='2'>
-       <div class='title'><p class='font lapinColor'>{{title}}</p></div>
-       <div class="box {{bgColor}}">
-         <a href='{{link}}'>
-           <img class='img_strips' ng-src="data:image/jpeg;base64,{{file}}" height="100%" width="100%"/>
-         </a>
-       </div>
-     </ion-slide-page>
-   </ion-slides>
+
+    <ks-swiper-container loop="false" initial-slide="index" show-nav-buttons="false" slides-per-view="1" space-between="5" pagination-clickable="false">
+                 <ks-swiper-slide ng-repeat="strip in images">
+                    <p class='font lapinColor stripsTitle' style='font-size:2em'>{{strip.title}}</p>
+                    <img ng-src='data:image/jpeg;base64,{{strip.file}}'/>
+                     <!-- <div class="strips{{bgColor}}"></div> -->
+                 </ks-swiper-slide>
+    </ks-swiper-container
 
   </ion-content>
 </ion-view>
