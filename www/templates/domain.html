@@ -7,7 +7,10 @@
   <p class='desc'>{{info.description}}</p>
   <p>par <strong> {{info.author}}</strong></p>
 </div>
-<div class='wrapperStrip'>
+<div ng-show="loading">
+    Loading …
+</div>
+<div ng-hide="loading" class='wrapperStrip'>
   <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-date'">
     <p class='font lapinColor stripsTitle'>{{strips.title}} </p>
     <div class='wrapperStripDomain'>

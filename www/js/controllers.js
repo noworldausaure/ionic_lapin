@@ -1,16 +1,17 @@
 angular.module('starter.controllers', ['ksSwiper'])
 
 .controller('HomeCtrl', function($scope,$http, Home) {
-
+  $scope.loading = true;
   $scope.domain = Home.returnDomain($http)
-
   $scope.domain.then(function(domain){
+    $scope.loading = false;
     $scope.dataDomain = domain.data;
   })
 })
 
 .controller('DomainCtrl', function($scope,$rootScope, $http, Home, $stateParams) {
   var domain = $stateParams.domain;
+  $scope.loading = true;
   $scope.domain = domain;
   $rootScope.idStories = 0;
   $rootScope.images = [];
@@ -31,6 +32,7 @@ angular.module('starter.controllers', ['ksSwiper'])
   $scope.DataStrips = Home.returnAllStrips($http,domain)
   $scope.DataStrips.then(function(strips){
     $scope.stripData = addIndex(strips.data);
+    $scope.loading = false;
     placeStrip(strips);
   })
 
