@@ -92,3 +92,12 @@ hr{
 .swiper-container {
     width: 100%;
 }
+.stripWrapper{
+  margin-left: auto;
+  margin-right: auto;
+}
+.stripImg{
+  display: block;width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
