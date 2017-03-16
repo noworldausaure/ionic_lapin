@@ -2,15 +2,11 @@
 
   <ion-content class="padding">
 
-    <ks-swiper-container swiper="swiper" on-ready="onReadySwiper(swiper)" loop="false" initial-slide="index" show-nav-buttons="false" slides-per-view="1" space-between="5" pagination-clickable="false">
-                 <ks-swiper-slide class='{{noSwipping}}' ng-repeat="strip in images">
+    <ks-swiper-container class='stripWrapper' swiper="swiper" on-ready="onReadySwiper(swiper)" loop="false" initial-slide="index" show-nav-buttons="false" slides-per-view="1" space-between="5" pagination-clickable="false">
+                 <ks-swiper-slide ng-repeat="strip in images">
                     <p class='font lapinColor stripsTitle' style='font-size:2em'>{{strip.title}}</p>
-                    <img ng-src='data:image/jpeg;base64,{{strip.file}}'/>
+                    <img class='stripImg'ng-src='data:image/jpeg;base64,{{strip.file}}'/>
                  </ks-swiper-slide>
     </ks-swiper-container>
-    <div class='button' ng-class={'display':changeClass}>
-      <button class='buyButton left'>Ok</button>
-      <button class='ChangeBuy right'>Nice</button>
-    </div>
   </ion-content>
 </ion-view>
