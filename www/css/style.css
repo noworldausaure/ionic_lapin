@@ -3,6 +3,8 @@ ion-content{
 }
 .font{
   font-family: 'pacifico';
+  font-size: 2em;
+  line-height: 1.5em;
 }
 .lapinColor{
   color:#BE6414;
@@ -11,7 +13,8 @@ ion-content{
   font-size: 1.5em;
 }
 .titleStrip{
-  font-size: 1.5em;
+  font-size: 2em;
+  line-height: 1.5em;
   font-family: pacifico;
   color:
 }
@@ -38,10 +41,11 @@ ion-content{
 .buyButton{
   width: 45%;
   background-color: #F6F6E6;
+  font-size: 2em;
+  line-height: 1.5em;
   font-family: pacifico;
 
 }
 .imgPopUp{
   width: 100%;
-  
 }

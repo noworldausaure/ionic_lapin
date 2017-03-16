@@ -1,5 +1,5 @@
 <ion-view  view-title='{{domain}}'>
-  <ion-content class="padding">
+<ion-content class="padding">
 <div class='wrapperAuthor'>
   <div class="banImageDomain">
     <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>
@@ -7,19 +7,20 @@
   <p class='desc'>{{info.description}}</p>
   <p>par <strong> {{info.author}}</strong></p>
 </div>
-<div class='storiesZone' >
-  <ul>
-    <li class='font lapinColor' ng-click='changeStrip(0)'>- Tout les Strips</li>
-    <li ng-click='changeStrip({{storie.id}})' class='font lapinColor'ng-repeat='storie in stories'> - {{storie.title}}</li>
-  <li>
-</div>
-  <div class='wrapperStrip'>
-    <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-date'"/>
+<div class='wrapperStrip'>
+  <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-date'">
     <p class='font lapinColor stripsTitle'>{{strips.title}} </p>
     <div class='wrapperStripDomain'>
-      <img class='strip' ui-sref="strip({domain: domain, id:strips.index})"src="data:image/jpeg;base64,{{strips.file}}"/>
+      <img class='strip' ui-sref="strip({domain: domain, id:strips.index})" src="data:image/jpeg;base64,{{strips.file}}"/>
     </div>
   </div>
-  </div>
-  </ion-content>
+</div>
+<div class='storiesZone' >
+  <div class='font lapinColor' ng-click='changeStrip(0)'>Tous les Strips</div>
+  <div class='font lapinColor' ng-click='changeStrip(0)'>Les stories :</div>
+  <ul>
+    <li ng-click='changeStrip({{storie.id}})' class='font lapinColor' ng-repeat='storie in stories'> - {{storie.title}}</li>
+  </ul>
+</div>
+</ion-content>
 </ion-view>
