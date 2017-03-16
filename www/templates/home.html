@@ -4,16 +4,10 @@
       <div class='logo'></div>
     </div>
     <hr class='decoHr'>
-  <div class='wrapper'>
-      <div ng-repeat="domain in dataDomain">
-            <img class='favicon' ui-sref="strips({domain: domain.short_name})" src='data:image/jpeg;base64,{{domain.favicon}}'/>
-          <!-- <div id='homeAuthor'>
-            <ul>
-              <li>{{datas.large_name}}</li>
-              <li>{{datas.author}}</li>
-            </ul>
-          </div> -->
-      </div>
+    <div class='wrapper'>
+      <div ng-repeat="domain in dataDomain" class="favicon">
+          <img ui-sref="strips({domain: domain.short_name})" src='data:image/jpeg;base64,{{domain.favicon}}'>
+          <div class="center">{{domain.short_name}}</div>
       </div>
     </div>
   </ion-content>

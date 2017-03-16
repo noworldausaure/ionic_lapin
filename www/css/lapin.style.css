@@ -31,15 +31,13 @@ hr{
   text-align: justify;
 }
 .wrapper{
-  width: 95%;
-  height: 80px;
+  width: 98vw;
   margin-left: auto;
   margin-right: auto;
 }
 .favicon{
-  width: 80px;
-  height: 80px;
   float: left;
+  margin: 1vw;
 }
 #homeAuthor{
   float: left;
