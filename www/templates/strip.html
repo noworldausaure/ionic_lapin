@@ -1,12 +1,12 @@
-<ion-view  view-title=''>
-
-  <ion-content class="padding">
-
-    <ks-swiper-container class='stripWrapper' swiper="swiper" on-ready="onReadySwiper(swiper)" loop="false" initial-slide="index" show-nav-buttons="false" slides-per-view="1" space-between="5" pagination-clickable="false">
-                 <ks-swiper-slide ng-repeat="strip in images">
-                    <p class='font lapinColor stripsTitle' style='font-size:2em'>{{strip.title}}</p>
-                    <img class='stripImg'ng-src='data:image/jpeg;base64,{{strip.file}}'/>
-                 </ks-swiper-slide>
-    </ks-swiper-container>
-  </ion-content>
+<ion-view view-title="{{domain}}">
+<ion-content class="padding">
+    <ion-slides options="data.sliderOptions" slider="data.sliderDelegate">
+      <ion-slide-page ng-repeat="strip in strips">
+		  <h1 class="center">{{strip.id}} -- {{strip.title}}</h1>
+          <div class="center">
+            <img class='strip center' src="data:image/jpeg;base64,{{strip.file}}">
+          </div>
+      </ion-slide-page>
+    </ion-slides>
+</ion-content>
 </ion-view>

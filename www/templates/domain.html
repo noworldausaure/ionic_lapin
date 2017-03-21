@@ -11,10 +11,10 @@
     Loading …
 </div>
 <div ng-hide="loading" class='wrapperStrip'>
-  <div class='stripZone' ng-repeat="strips in stripData | orderBy: '-date'">
-    <p class='font lapinColor stripsTitle'>{{strips.title}} </p>
+  <div class='stripZone' ng-repeat="strip in strips | orderBy: '-date'">
+    <p class='font lapinColor stripsTitle'>{{strip.title}} </p>
     <div class='wrapperStripDomain'>
-      <img class='strip' ui-sref="strip({domain: domain, id:strips.index})" src="data:image/jpeg;base64,{{strips.file}}"/>
+      <img class='strip' ui-sref="strip({domain: domain, id:strip.id})" src="data:image/jpeg;base64,{{strip.file}}">
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@
   <div class='font lapinColor' ng-click='changeStrip(0)'>Tous les Strips</div>
   <div class='font lapinColor' ng-click='changeStrip(0)'>Les stories :</div>
   <ul>
-    <li ng-click='changeStrip({{storie.id}})' class='font lapinColor' ng-repeat='storie in stories'> - {{storie.title}}</li>
+    <li ng-click='showStory({{story.id}})' class='font lapinColor' ng-repeat='story in stories'> - {{story.title}}</li>
   </ul>
 </div>
 </ion-content>

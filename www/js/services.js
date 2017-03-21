@@ -1,26 +1,35 @@
 angular.module('starter.services', [])
 
-
-.factory('Home', function($http){
-  var url =  'http://localhost/API_Lapin/api/'
+.factory('Home', function($http) {
+  var url =  'https://api.lapin.org/'
   return {
-    url: function() {
-      return 'http://localhost/API_Lapin/api/';
+    returnDomain: function($http) {
+      return $http.get(url + 'infoGeneral', {cache:true});
     },
-    returnDomain($http) {
-      return $http.get(url + 'infoGeneral');
+    returnInfo: function($http,domain) {
+      return $http.get(url + 'info/' + domain, {cache:true});
     },
-    returnAllStrips($http,domain){
-      return $http.get(url + 'strips/'+domain);
+    returnStories: function($http,domain) {
+      return $http.get(url + 'stories/' + domain, {cache:true});
     },
-    returnStripsByStories($http,domain,id){
-      return $http.get(url +'/strips/stories/' + domain + '/' + id);
+    returnNthStrips: function($http,domain,number,offset) {
+      offset = typeof offset !== 'undefined' ? offset : 0;
+      return $http.get(url + 'strips/' + domain + '/' + number + "/" + offset, {cache:true});
     },
-    returnPubByDomain($http,domain){
-        return $http.get(url + '/pub/domain/'+domain )
+    returnAllStrips: function($http,domain) {
+      return $http.get(url + 'strips/' + domain, {cache:true});
     },
-    returnLapinPub($http,domain){
-        return $http.get(url + '/pub/general' )
+    returnStripsByStories: function($http,domain,id) {
+      return $http.get(url +'strips/stories/' + domain + '/' + id, {cache:true});
+    },
+    returnStripImage: function($http,domain,id) {
+      return $http.get(url + 'strips/image/' + domain + "/" + id, {cache:true});
+    },
+    returnPubByDomain: function($http,domain) {
+        return $http.get(url + 'pub/domain/' + domain, {cache:true});
+    },
+    returnLapinPub: function($http,domain) {
+        return $http.get(url + 'pub/general', {cache:true});
     }
   }
 });

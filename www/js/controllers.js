@@ -1,70 +1,70 @@
-angular.module('starter.controllers', ['ksSwiper'])
+angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope,$http, Home) {
   $scope.loading = true;
-  $scope.domain = Home.returnDomain($http)
-  $scope.domain.then(function(domain){
+  $scope.domain = Home.returnDomain($http).then(function(domain) {
     $scope.loading = false;
     $scope.dataDomain = domain.data;
-  })
+  });
 })
 
 .controller('DomainCtrl', function($scope,$rootScope, $http, Home, $stateParams) {
   var domain = $stateParams.domain;
   $scope.loading = true;
   $scope.domain = domain;
-  $rootScope.idStories = 0;
-  $rootScope.images = [];
-  //FUNCTION GET ALL STRIPS
+
   //GET INFO domain
-  var url = Home.url()+ 'info/'+domain;
-  $http.get(url).success(function(info){
-    $scope.info = info[0];
+  Home.returnInfo($http,domain).then(function(info) {
+    $scope.info = info.data[0];
   });
 
-  //GET STORIES
-  var url = Home.url()+ 'stories/'+domain;
-  $http.get(url).success(function(stories){
-    console.log(stories);
-    $scope.stories = stories;
+  // GET STRIPS
+  Home.returnAllStrips($http,domain).then(function(strips) {
+    $scope.strips = strips.data;
+  }).then(function(strips) {
+    $scope.strips.forEach(function(strip) {
+      Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
+         $scope.loading = false;
+         strip.file = stripImage.data[0].file;
+      });
+    });
   });
 
-  $scope.DataStrips = Home.returnAllStrips($http,domain)
-  $scope.DataStrips.then(function(strips){
-    $scope.stripData = addIndex(strips.data);
-    $scope.loading = false;
-    placeStrip(strips);
-  })
+  // GET STORIES
+  Home.returnStories($http,domain).then(function(stories) {
+    $scope.stories = stories.data;
+  });
 
-  //SWITCH STRIP FUNCTION
-  $scope.changeStrip = function(id){
-    $rootScope.idStories = id;
-    if($rootScope.idStories == 0){
-      $rootScope.images = [];
-      $scope.DataStrips = Home.returnAllStrips($http,domain).then(function(strips){
-        $scope.stripData = addIndex(strips.data);
-        placeStrip(strips);
-      })
-    } else{
-      $rootScope.images = []
-      $scope.DataStrips = Home.returnStripsByStories($http,domain,$rootScope.idStories).then(function(strips){
-        $scope.stripData = addIndex(strips.data);
-        placeStrip(strips);
-      })
+  // SHOW STORY FUNCTION
+  $scope.showStory = function(storyId) {
+    $scope.loading = true;
+    $rootScope.idStories = storyId;
+    if($rootScope.idStories == 0) {
+      Home.returnAllStrips($http,domain).then(function(strips) {
+        $scope.loading = false;
+        $scope.strips = strips.data;
+      }).then(function(strips) {
+        $scope.strips.forEach(function(strip) {
+          Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
+             $scope.loading = false;
+             strip.file = stripImage.data[0].file;
+          });
+        });
+      });
     }
-  }
-
-
-  var placeStrip = function(data){
-    for(i = 0; i < data.data.length; i++){
-      $rootScope.images.push(data.data[i]);
+    else {
+      Home.returnStripsByStories($http,domain,$rootScope.idStories).then(function(strips) {
+        $scope.loading = false;
+        $scope.strips = strips.data;
+      }).then(function(strips) {
+        $scope.strips.forEach(function(strip) {
+          Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
+             $scope.loading = false;
+             strip.file = stripImage.data[0].file;
+          });
+        });
+      });
     }
-}
-  function addIndex(array){
-    for(i=0; i < array.length; i++){
-      array[i]['index'] = i;
-    }
-    return array;
   }
 })
 
@@ -72,76 +72,87 @@ angular.module('starter.controllers', ['ksSwiper'])
 .controller('StripCtrl', function($scope,$ionicPopup,$location, $rootScope, $http, Home, $stateParams, $ionicSlideBoxDelegate) {
   var idStories = $rootScope.idStories;
   var domain = $stateParams.domain;
+  var id = $stateParams.id;
   var count = 0;
   var pubDomain = false;
-  $scope.changeClass = true
-  $scope.index = $stateParams.id;
+  $scope.domain = domain;
+  $scope.data = [];
+  // SET UP SLIDER
+  $scope.data.sliderOptions = {
+    initialSlide: id,
+    direction: 'horizontal', //or vertical
+  };
+  $scope.data.sliderDelegate = null;
+  $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+    $scope.slider = data.slider;
+});
+  $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
+    if (newVal != null) {
+      $scope.data.sliderDelegate.on('slideChangeEnd', function() {
+        $scope.data.currentPage = $scope.data.sliderDelegate.activeIndex;
+        $scope.$apply();
+      });
+    }
+  });
+
+  // STRIPS SECTION
+  Home.returnNthStrips($http,domain,5,id-1)
+  .then(function(strips) {
+    $scope.strips = strips.data;
+  })
+  .then(function(strips) {
+    $scope.strips.forEach(function(strip) {
+      Home.returnStripImage($http,domain,strip.id)
+      .then(function(stripImage) {
+        strip.file = stripImage.data[0].file;
+      });
+    });
+  });
+
+  $scope.$on("$ionicSlides.slideChangeEnd", function(event, data) {
+    index = data.slider.activeIndex;
+    // if we reached the end of the slider, we'll load data
+    if(index == ($scope.strips.length-1)) {
+      // first fetch new info, second fetch new images
+      Home.returnNthStrips($http,domain,5,$scope.strips[index].id)
+      .then(function(strips) {
+        $scope.strips = $scope.strips.concat(strips.data);
+    console.log($scope.strips);
+      })
+      .then(function(strips) {
+        $scope.strips.forEach(function(strip) {
+          try {
+            if(strip.file.length === 0) {
+              throw {message: 'no file yet'};
+            }
+          }
+          catch(e) {
+            Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
+              strip.file = stripImage.data[0].file;
+            });
+          }
+        });
+      });
+    }
+  });
+
+  // ADVERTISING SECTION
+  Domainpub = Home.returnPubByDomain($http,domain);
+  Lapinpub = Home.returnLapinPub($http);
   $scope.data = {}
-  $scope.data.bgColors = []
-  $scope.noSwipping;
 
-  Domainpub = Home.returnPubByDomain($http,domain)
-  Lapinpub = Home.returnLapinPub($http)
-  $scope.swiper = {};
+  showConfirm = function(data) {
+    var confirmPopup = $ionicPopup.confirm({
+      title: '<p class=font lapinColor>'+data.name+'</p>',
+      template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
+      cancelText:'Retour',
+     okText:'Plus d\'info',
+    });
 
-   $scope.onReadySwiper = function (swiper) {
-     console.log(swiper)
-     swiper.on('slideChangeStart', function () {
-       count++;
-       console.log(swiper.activeIndex);
-       console.log(count);
-       if(count == 2 && !pubDomain){
-         Domainpub.then(function(data){
-           var u = Math.floor((Math.random() * data.data.length) + 0);
-           showConfirm(data.data[u]);
-           pubDomain = true;
-         })
-       }
-       if(count == 10){
-        Lapinpub.then(function(data){
-          var u = Math.floor((Math.random() * data.data.length) + 0);
-          showConfirm(data.data[u]);
-        })
-        count = 0;
-       }
-     });
-   };
-
-   showConfirm = function(data) {
-   var confirmPopup = $ionicPopup.confirm({
-     title: '<p class=font lapinColor>'+data.name+'</p>',
-     template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
-     cancelText:'Retour',
-    okText:'Plus d\'info',
-   });
-
-   confirmPopup.then(function(res) {
-     if(res) {
+    confirmPopup.then(function(res) {
+      if(res) {
         window.open(data.link,'_system')
-     }
-   });
- };
-
-  //  var showPopup = function(data) {
-  //    $scope.data = {}
-
-     // Custom popup
-    //  var myPopup = $ionicPopup.confirm({
-    //     template:
-    //     title: data.name,
-    //     subTitle: 'Chez lapin',
-    //     scope: $scope,
-     //
-    //     buttons: [
-    //        { text: 'Retour' }, {
-    //           text: '<b>Plus d\'info</b>',
-    //           type: 'button-positive',
-    //        }
-    //     ]
-    //  });
-    //  myPopup.then(function(res) {
-    //     console.log('Tapped!', res);
-    //  });
-  // });
-// })
+      }
+    });
+  };
 })
