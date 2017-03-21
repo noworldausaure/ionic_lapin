@@ -1,6 +1,6 @@
 {
-  "name": "Ionic_Lapin",
-  "short_name": "Ionic_Lapin",
+  "name": "Strips lapin.org",
+  "short_name": "ionic_Lapin",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
