@@ -62,7 +62,6 @@ angular.module('starter.controllers', [])
   }
 })
 
-
 .controller('StripCtrl', function($scope,$ionicPopup,$location, $rootScope, $http, Home, $stateParams, $ionicSlideBoxDelegate) {
   var idStories = $rootScope.idStories;
   var domain = $stateParams.domain;

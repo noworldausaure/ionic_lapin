@@ -1,6 +1,6 @@
 <p class='font lapinColor stripsTitle' ui-sref="strip({domain: strip.domain, id:strip.id})">{{strip.title}} </p>
 <div class='wrapperStripDomain'>
-  <div ng-hide="strip.loading">Loading…</div>
-  <img ng-show="strip.loading" class='strip' ui-sref="strip({domain: strip.domain, id:strip.id})" src="data:image/jpeg;base64,{{strip.file}}">
+  <div ng-show="strip.loading">Loading…</div>
+  <img ng-hide="strip.loading" class='strip' ui-sref="strip({domain: strip.domain, id:strip.id})" src="data:image/jpeg;base64,{{strip.file}}">
 </div>
 

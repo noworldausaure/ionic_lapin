@@ -1,26 +1,26 @@
 <ion-view  view-title='{{domain}}'>
-<ion-content class="padding">
-<div class='wrapperAuthor'>
+  <ion-content class="padding">
+  <div class='wrapperAuthor'>
   <div class="banImageDomain">
     <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>
   </div>
   <p class='desc'>{{info.description}}</p>
   <p>par <strong> {{info.author}}</strong></p>
-</div>
-<div ng-show="loading">
+  </div>
+  <div ng-show="loading">
     Loading …
-</div>
-<div ng-hide="loading" class='wrapperStrip'>
+  </div>
+  <div ng-hide="loading" class='wrapperStrip'>
   <div class='stripZone' ng-repeat="strip in strips | orderBy: '-date'">
     <strip-thumbnail strip="strip"></strip-thumbnail>
   </div>
-</div>
-<div class='storiesZone' >
+  </div>
+  <div class='storiesZone' >
   <div class='font lapinColor' ng-click='changeStrip(0)'>Tous les Strips</div>
   <div class='font lapinColor' ng-click='changeStrip(0)'>Les stories :</div>
   <ul>
     <li ng-click='showStory({{story.id}})' class='font lapinColor' ng-repeat='story in stories'> - {{story.title}}</li>
   </ul>
-</div>
-</ion-content>
+  </div>
+  </ion-content>
 </ion-view>
