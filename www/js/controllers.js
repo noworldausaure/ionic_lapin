@@ -19,16 +19,24 @@ angular.module('starter.controllers', [])
   });
 
   // GET STRIPS
-  Home.returnAllStrips($http,domain).then(function(strips) {
+  Home.returnAllStrips($http,domain)
+  .then(function(strips) {
     $scope.strips = strips.data;
-  }).then(function(strips) {
+    $scope.loading = false;
     $scope.strips.forEach(function(strip) {
-      Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
-         $scope.loading = false;
-         strip.file = stripImage.data[0].file;
-      });
+      strip.domain = $scope.domain;
+      stripImageLoader(strip);
     });
   });
+
+  var stripImageLoader = function(strip) {
+    strip.loading = true;
+    Home.returnStripImage($http,domain,strip.id)
+    .then(function(stripImage) {
+      strip.file = stripImage.data[0].file;
+      strip.loading = false;
+    });
+  };
 
   // GET STORIES
   Home.returnStories($http,domain).then(function(stories) {
@@ -43,26 +51,12 @@ angular.module('starter.controllers', [])
       Home.returnAllStrips($http,domain).then(function(strips) {
         $scope.loading = false;
         $scope.strips = strips.data;
-      }).then(function(strips) {
-        $scope.strips.forEach(function(strip) {
-          Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
-             $scope.loading = false;
-             strip.file = stripImage.data[0].file;
-          });
-        });
       });
     }
     else {
       Home.returnStripsByStories($http,domain,$rootScope.idStories).then(function(strips) {
         $scope.loading = false;
         $scope.strips = strips.data;
-      }).then(function(strips) {
-        $scope.strips.forEach(function(strip) {
-          Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
-             $scope.loading = false;
-             strip.file = stripImage.data[0].file;
-          });
-        });
       });
     }
   }
@@ -77,15 +71,18 @@ angular.module('starter.controllers', [])
   var pubDomain = false;
   $scope.domain = domain;
   $scope.data = [];
+
   // SET UP SLIDER
+  $scope.data.sliderDelegate = null;
   $scope.data.sliderOptions = {
     initialSlide: id,
     direction: 'horizontal', //or vertical
   };
-  $scope.data.sliderDelegate = null;
+
   $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
     $scope.slider = data.slider;
-});
+  });
+
   $scope.$watch('data.sliderDelegate', function(newVal, oldVal) {
     if (newVal != null) {
       $scope.data.sliderDelegate.on('slideChangeEnd', function() {
@@ -95,46 +92,37 @@ angular.module('starter.controllers', [])
     }
   });
 
-  // STRIPS SECTION
-  Home.returnNthStrips($http,domain,5,id-1)
-  .then(function(strips) {
-    $scope.strips = strips.data;
-  })
-  .then(function(strips) {
-    $scope.strips.forEach(function(strip) {
-      Home.returnStripImage($http,domain,strip.id)
-      .then(function(stripImage) {
-        strip.file = stripImage.data[0].file;
-      });
-    });
-  });
-
   $scope.$on("$ionicSlides.slideChangeEnd", function(event, data) {
     index = data.slider.activeIndex;
     // if we reached the end of the slider, we'll load data
     if(index == ($scope.strips.length-1)) {
-      // first fetch new info, second fetch new images
       Home.returnNthStrips($http,domain,5,$scope.strips[index].id)
       .then(function(strips) {
         $scope.strips = $scope.strips.concat(strips.data);
-    console.log($scope.strips);
-      })
-      .then(function(strips) {
         $scope.strips.forEach(function(strip) {
-          try {
-            if(strip.file.length === 0) {
-              throw {message: 'no file yet'};
-            }
-          }
-          catch(e) {
-            Home.returnStripImage($http,domain,strip.id).then(function(stripImage) {
-              strip.file = stripImage.data[0].file;
-            });
-          }
+          stripImageLoader(strip);
         });
       });
     }
   });
+
+  // STRIPS SECTION
+  Home.returnNthStrips($http,domain,5,id-1)
+    .then(function(strips) {
+      $scope.strips = strips.data;
+      $scope.strips.forEach(function(strip) {
+        stripImageLoader(strip);
+      });
+    });
+
+  var stripImageLoader = function(strip) {
+    strip.loading = true;
+    Home.returnStripImage($http,domain,strip.id)
+    .then(function(stripImage) {
+      strip.loading = false;
+      strip.file = stripImage.data[0].file;
+    });
+  };
 
   // ADVERTISING SECTION
   Domainpub = Home.returnPubByDomain($http,domain);

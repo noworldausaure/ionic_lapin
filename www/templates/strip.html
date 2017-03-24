@@ -2,10 +2,7 @@
 <ion-content class="padding">
     <ion-slides options="data.sliderOptions" slider="data.sliderDelegate">
       <ion-slide-page ng-repeat="strip in strips">
-		  <h1 class="center">{{strip.id}} -- {{strip.title}}</h1>
-          <div class="center">
-            <img class='strip center' src="data:image/jpeg;base64,{{strip.file}}">
-          </div>
+          <strip-view strip="strip"></strip-view>
       </ion-slide-page>
     </ion-slides>
 </ion-content>

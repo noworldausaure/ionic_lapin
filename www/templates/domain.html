@@ -12,10 +12,7 @@
 </div>
 <div ng-hide="loading" class='wrapperStrip'>
   <div class='stripZone' ng-repeat="strip in strips | orderBy: '-date'">
-    <p class='font lapinColor stripsTitle'>{{strip.title}} </p>
-    <div class='wrapperStripDomain'>
-      <img class='strip' ui-sref="strip({domain: domain, id:strip.id})" src="data:image/jpeg;base64,{{strip.file}}">
-    </div>
+    <strip-thumbnail strip="strip"></strip-thumbnail>
   </div>
 </div>
 <div class='storiesZone' >
