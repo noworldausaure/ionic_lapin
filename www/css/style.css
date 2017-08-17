@@ -36,7 +36,7 @@ ion-content{
   display: none;
 }
 .button{
-  width: 100%;
+  /*width: 100%;*/
 }
 .buyButton{
   width: 45%;

@@ -31,6 +31,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   })
   $urlRouterProvider.otherwise('/home');
 })
+.config(function ($ionicConfigProvider) {
+  $ionicConfigProvider.backButton.previousTitleText(false)
+  $ionicConfigProvider.backButton.text('');
+})
 .config(function($httpProvider) {
   /**
    ** Interceptor to queue HTTP requests.
