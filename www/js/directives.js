@@ -18,4 +18,13 @@ angular.module('starter.directives', [])
     restrict: 'E',
     templateUrl: 'templates/_strip-view.html',
   }
+})
+
+.directive('comment', function () {
+    return {
+        restrict: 'E',
+        compile: function (tElement, attrs) {
+            tElement.remove();
+        }
+    };
 });
