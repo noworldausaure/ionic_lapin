@@ -8,7 +8,7 @@
   <p>par <strong> {{info.author}}</strong></p>
   </div>
   <div ng-show="loading">
-    Loading …
+    <img src="../img/loading-bar.gif" alt="Loading…" />
   </div>
   <div ng-hide="loading" class='wrapperStrip'>
   <div class='stripZone' ng-repeat="strip in strips | orderBy: '-date'">
