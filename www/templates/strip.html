@@ -1,9 +1,9 @@
 <ion-view view-title="{{domain}}">
-<ion-content class="padding">
-    <ion-slides options="data.sliderOptions" slider="data.sliderDelegate">
-      <ion-slide-page ng-repeat="strip in strips">
-          <strip-view strip="strip"></strip-view>
+  <ion-content class="padding" scroll="false">
+    <ion-slides options="sliderOptions" slider="slider">
+      <ion-slide-page ng-repeat="strip in strips | orderBy: 'id'">
+        <strip-view strip="strip"></strip-view>
       </ion-slide-page>
     </ion-slides>
-</ion-content>
+  </ion-content>
 </ion-view>
