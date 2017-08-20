@@ -48,6 +48,16 @@ hr{
   width:100%;
   height: 150px;
 }
+.loadingIndicator{
+  background-image: url('../img/loading-bar.gif');
+  background-size: 100%;
+  width: 25px;
+  height: 25px;
+  background-repeat: no-repeat;
+}
+div[class='loadingIndicator center'] {
+  margin: 0 auto;
+}
 .wrapperStrip{
   width: 90%;
   margin-left: auto;
