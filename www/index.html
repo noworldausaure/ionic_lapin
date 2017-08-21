@@ -17,8 +17,8 @@
     </script>-->
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/lapin.style.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/lapin.style.css" rel="stylesheet">
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -28,12 +28,6 @@
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-
-    <!-- your app's js -->
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
   </head>
   <body ng-app="starter" style='background-color:#F6F6E6'>
     <!--
@@ -50,5 +44,33 @@
     -->
     <ion-nav-view>
     </ion-nav-view>
+
+    <!-- Create modules -->
+    <script src="app/modules.js"></script>
+
+    <!-- Load app -->
+    <script src="app/app.js"></script>
+
+    <!-- Common -->
+    <script src="app/common/directives/comment.js"></script>
+    <script src="app/common/services/api.js"></script>
+
+    <!-- Home -->
+    <script src="app/home/controllers/HomeCtrl.js"></script>
+
+    <!-- Domain -->
+    <script src="app/domain/controllers/DomainCtrl.js"></script>
+    <script src="app/domain/directives/strip-thumbnail.js"></script>
+    <script src="app/domain/services/domain.js"></script>
+
+    <!-- Strip -->
+    <script src="app/strip/directives/strip-view.js"></script>
+    <script src="app/strip/controllers/StripCtrl.js"></script>
+    <script src="app/strip/services/strip.js"></script>
+    <script src="app/strip/services/pub.js"></script>
+
+    <!-- Story -->
+    <script src="app/story/services/story.js"></script>
+
   </body>
 </html>

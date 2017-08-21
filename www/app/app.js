@@ -15,17 +15,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','s
   $stateProvider
   .state('home',{
     url: '/home',
-    templateUrl: 'templates/home.html',
+    templateUrl: 'app/home/views/home.html',
     controller:'HomeCtrl'
   })
   .state('strips', {
     url: '/strips/:domain',
-    templateUrl: 'templates/domain.html',
+    templateUrl: 'app/domain/views/domain.html',
     controller:'DomainCtrl'
   })
   .state('strip', {
     url: '/strips/:domain/:id',
-    templateUrl: 'templates/strip.html',
+    templateUrl: 'app/strip/views/strip.html',
     controller:'StripCtrl',
     cache: false
   })
