@@ -154,7 +154,7 @@ function StripCtrl($scope,$ionicPopup,$location, $rootScope, $http,
     //
     // showConfirm = function(data) {
     //   var confirmPopup = $ionicPopup.confirm({
-    //     title: '<p class=font lapinColor>'+data.name+'</p>',
+    //     title: '<p class=font lapin-color>'+data.name+'</p>',
     //     template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
     //     cancelText:'Retour',
     //    okText:'Plus d\'info',

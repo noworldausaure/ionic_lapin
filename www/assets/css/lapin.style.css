@@ -1,4 +1,4 @@
-.banner{
+.banner {
   width: 100%;
   height:100px;
   background-image: url('../img/banner.png');
@@ -7,7 +7,7 @@
   background-position: center;
 }
 
-.logo{
+.logo {
   width: 100px;
   height: 150px;
   background-image: url('../img/logo.png');
@@ -15,79 +15,95 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
-hr{
+
+hr {
   border-style: dashed;
   border-width: 1px;
   color:#BF6A27;
 }
-.banner p{
+
+.banner p {
   font-family: 'pacifico';
   text-align: center;
   font-size: 2em;
   line-height: 1.5em;
   padding-top: 30px;
 }
-.desc{
+
+.desc {
   font-size: 1em;
   line-height: 1em;
   text-align: justify;
 }
-.wrapper{
+
+.wrapper {
   width: 98vw;
   margin: 0 auto;
 }
-.favicon{
+
+.favicon {
   float: left;
   margin: 1vw;
 }
-#homeAuthor{
+
+#home-author {
   float: left;
 }
-.banniere{
+
+.banniere {
   width:100%;
   height: 150px;
 }
-.loadingIndicator{
+
+.loading-indicator {
   background-image: url('../img/loading-bar.gif');
   background-size: 100%;
   width: 25px;
   height: 25px;
   background-repeat: no-repeat;
 }
-div[class='loadingIndicator center'] {
+
+div[class='loading-indicator center'] {
   margin: 0 auto;
 }
-.wrapperStrip{
+
+.wrapper-strip {
   width: 90%;
   margin: 0 auto;
 }
-.stripZone{
+
+.strip-zone {
   width: 33.33%;
   padding: 7px;
   height: 175px;
   float: left;
   border: solid 1px #CAC5B8;
 }
-.storiesZone{
+
+.stories-zone {
   clear: both;
   border: solid 1px #CAC5B8;
   border-radius: 12px;
   padding: 1em;
   margin: 1vh 1vw;
 }
-.stripZone p{
+
+.strip-zone p {
   text-align: center;
 }
-.strip{
+
+.strip {
   width: 100%;
   height: 100%;
 }
-.stripsTitle{
+
+.strips-title {
   font-family: auto;
   text-align: right;
   font-size: 0.8em;
 }
-.wrapperAuthor{
+
+.wrapper-author {
   width: 100%;
   margin: 0 auto;
   border: solid 1px #CAC5B8;
@@ -95,18 +111,21 @@ div[class='loadingIndicator center'] {
   padding: 5px;
   margin-bottom: 15px;
 }
-.stripTitle{
+
+.strip-title {
   text-align: center;
   font-size: 1.5em;
   color:#BF6A27;
 }
+
 .swiper-container {
     width: 100%;
 }
-.stripWrapper{
+
+.strip-wrapper {
   margin: 0 auto;
 }
-.stripImg{
+.strip-img {
   display: block;
   width: 100%;
   margin: 0 auto;

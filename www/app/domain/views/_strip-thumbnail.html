@@ -1,7 +1,7 @@
-<p class='font lapinColor stripsTitle' ui-sref="strip({domain: strip.domain, id: strip.id})">{{strip.title}} </p>
-<div class='wrapperStripDomain'>
+<p class='font lapin-color strips-title' ui-sref="strip({domain: strip.domain, id: strip.id})">{{strip.title}} </p>
+<div class='wrapper-strip-domain'>
   <div ng-show="strip.loading">
-        <div class="loadingIndicator center"></div>
+        <div class="loading-indicator center"></div>
   </div>
   <img ng-hide="strip.loading" class='strip' ui-sref="strip({domain: strip.domain, id: strip.id})" src="data:image/jpeg;base64,{{strip.file}}">
 </div>
