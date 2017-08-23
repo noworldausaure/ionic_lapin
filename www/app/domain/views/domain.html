@@ -1,27 +1,27 @@
-<ion-view  view-title='{{domain}}'>
+<ion-view view-title='{{domain}}'>
   <ion-content class="padding">
-  <div class='wrapper-author'>
-  <div class="ban-image-domain">
-    <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>
-  </div>
-  <p class='desc'>{{info.description}}</p>
-  <p>par <strong> {{info.author}}</strong></p>
-  </div>
-  <div ng-show="loading">
-    <div class="loading-indicator center"></div>
-  </div>
-  <div ng-hide="loading" class='wrapper-strip'>
-  <div class='strip-zone' ng-repeat="strip in strips | orderBy: '-date'">
-    <strip-thumbnail strip="strip"></strip-thumbnail>
-  </div>
-  </div>
-  <div class='stories-zone' >
-  <div class='font lapin-color' ng-click='changeStrip(0)'>Tous les Strips</div>
-  <!-- Create stories view -->
-  <div class='font lapin-color' ng-click='changeStrip(0)'>Les stories :</div>
-  <ul>
-    <li ng-click='showStory({{story.id}})' class='font lapin-color' ng-repeat='story in stories'> - {{story.title}}</li>
-  </ul>
-  </div>
+    <div class='wrapper-author'>
+      <div class="ban-image-domain">
+        <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}" />
+      </div>
+      <p class='desc'>{{info.description}}</p>
+      <p>par <strong> {{info.author}}</strong></p>
+    </div>
+    <div ng-show="loading">
+      <div class="loading-indicator center"></div>
+    </div>
+    <div ng-hide="loading" class='wrapper-strip'>
+      <div class='strip-zone' ng-repeat="strip in strips | orderBy: '-date'">
+        <strip-thumbnail strip="strip"></strip-thumbnail>
+      </div>
+    </div>
+    <div class='stories-zone'>
+      <div class='font lapin-color' ng-click='changeStrip(0)'>Tous les Strips</div>
+      <!-- Create stories view -->
+      <div class='font lapin-color' ng-click='changeStrip(0)'>Les stories :</div>
+      <ul>
+        <li ng-click='showStory({{story.id}})' class='font lapin-color' ng-repeat='story in stories'> - {{story.title}}</li>
+      </ul>
+    </div>
   </ion-content>
 </ion-view>

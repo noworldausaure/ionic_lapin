@@ -1,6 +1,6 @@
 .banner {
   width: 100%;
-  height:100px;
+  height: 100px;
   background-image: url('../img/banner.png');
   background-size: 95% 72px;
   background-repeat: no-repeat;
@@ -19,7 +19,7 @@
 hr {
   border-style: dashed;
   border-width: 1px;
-  color:#BF6A27;
+  color: #BF6A27;
 }
 
 .banner p {
@@ -51,7 +51,7 @@ hr {
 }
 
 .banniere {
-  width:100%;
+  width: 100%;
   height: 150px;
 }
 
@@ -115,16 +115,17 @@ div[class='loading-indicator center'] {
 .strip-title {
   text-align: center;
   font-size: 1.5em;
-  color:#BF6A27;
+  color: #BF6A27;
 }
 
 .swiper-container {
-    width: 100%;
+  width: 100%;
 }
 
 .strip-wrapper {
   margin: 0 auto;
 }
+
 .strip-img {
   display: block;
   width: 100%;
