@@ -4,7 +4,7 @@ function StripView() {
       strip: '='
     },
     restrict: 'E',
-    templateUrl: 'app/strip/views/_strip-view.html',
+    templateUrl: 'app/partials/strip/views/strip-view.html',
   }
 }
 

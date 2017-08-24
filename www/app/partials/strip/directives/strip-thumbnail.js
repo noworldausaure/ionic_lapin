@@ -4,7 +4,7 @@ function StripThumbnail() {
       strip: '='
     },
     restrict: 'E',
-    templateUrl: 'app/domain/views/_strip-thumbnail.html'
+    templateUrl: 'app/partials/strip/views/strip-thumbnail.html'
   }
 }
 
