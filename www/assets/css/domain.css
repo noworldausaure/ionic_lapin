@@ -1,0 +1,44 @@
+.desc {
+  font-size: 1em;
+  line-height: 1em;
+  text-align: justify;
+}
+
+.banniere {
+  width: 100%;
+  height: 150px;
+}
+
+.strip-zone {
+  width: 33.33%;
+  padding: 7px;
+  height: 175px;
+  float: left;
+  border: solid 1px #CAC5B8;
+}
+
+.strip-zone p {
+  text-align: center;
+}
+
+.stories-zone {
+  clear: both;
+  border: solid 1px #CAC5B8;
+  border-radius: 12px;
+  padding: 1em;
+  margin: 1vh 1vw;
+}
+
+.strip {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper-author {
+  width: 100%;
+  margin: 0 auto;
+  border: solid 1px #CAC5B8;
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 15px;
+}
