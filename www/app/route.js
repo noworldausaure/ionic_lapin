@@ -1,3 +1,5 @@
+var pubPopup = null;
+
 angular.module('starter')
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -16,6 +18,19 @@ angular.module('starter')
         templateUrl: 'app/strip/views/strip.html',
         controller: 'StripCtrl',
         cache: false
+      })
+      .state('strip.pub', {
+        url: '/pub',
+        templateUrl: 'app/strip/views/strip.html',
+        controller: 'PubCtrl',
+        onEnter: function (Popup) {
+          pubPopup = Popup.showPub();
+        },
+        onExit: function () {
+          console.log("Leave");
+          console.log(pubPopup);
+          pubPopup.close();
+        }
       })
     $urlRouterProvider.otherwise('/home');
   });

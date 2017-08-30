@@ -1,5 +1,5 @@
 function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
-  $stateParams, $ionicSlideBoxDelegate, Strip, Pub) {
+  $stateParams, $ionicSlideBoxDelegate, Strip, Popup) {
 
   var idStories = $rootScope.idStories;
   var domain = $stateParams.domain;
@@ -130,7 +130,6 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
     });
   });
 
-  // STRIPS SECTION
   // Populate initial strips
   Strip.returnNthStrips($http, domain, 5, id - 3)
     .then(function(strips) {
@@ -148,25 +147,6 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
         strip.file = stripImage.data[0].file;
       });
   };
-
-  // ADVERTISING SECTION
-  // Domainpub = Pub.returnPubByDomain($http,domain);
-  // Lapinpub = Pub.returnLapinPub($http);
-  //
-  // showConfirm = function(data) {
-  //   var confirmPopup = $ionicPopup.confirm({
-  //     title: '<p class=font lapin-color>'+data.name+'</p>',
-  //     template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
-  //     cancelText:'Retour',
-  //    okText:'Plus d\'info',
-  //   });
-  //
-  //   confirmPopup.then(function(res) {
-  //     if(res) {
-  //       window.open(data.link,'_system')
-  //     }
-  //   });
-  // };
 }
 
 angular.module('starter.controllers')
