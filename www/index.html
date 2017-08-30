@@ -36,7 +36,7 @@
   <script src="cordova.js"></script>
 </head>
 
-<body ng-app="starter" style='background-color:#F6F6E6'>
+<body ng-app="starter" style='background-color:#F6F6E6' ng-controller="MainCtrl">
   <!--
       The nav bar that will be updated as we navigate between views.
     -->
@@ -46,7 +46,7 @@
     </ion-nav-back-button>
 
     <ion-nav-buttons side="right">
-      <ion-icon class="navbar-menu-button"></ion-icon>
+      <button class="navbar-menu-button" ng-click="showMenu($event)"></button>
     </ion-nav-buttons>
   </ion-nav-bar>
 
@@ -68,6 +68,7 @@
   <script src="app/http.js"></script>
 
   <!-- Common -->
+  <script src="app/common/controllers/MainCtrl.js"></script>
   <script src="app/common/directives/comment.js"></script>
   <script src="app/common/services/api.js"></script>
 
