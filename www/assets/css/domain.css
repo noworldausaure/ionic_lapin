@@ -5,20 +5,21 @@
 }
 
 .banniere {
-  width: 100%;
   height: 150px;
+  width:75%;
+  margin-left: 12.5%;
 }
 
 .strip-zone {
-  width: 33.33%;
-  padding: 7px;
-  height: 175px;
-  float: left;
   border: solid 1px #CAC5B8;
+  float: left;
+  height: 175px;
+  padding: 7px;
+  width: 175px;
 }
 
 .strip-zone p {
-  text-align: center;
+  text-align: left;
 }
 
 .stories-zone {
@@ -30,8 +31,8 @@
 }
 
 .strip {
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 130px;
 }
 
 .wrapper-author {
