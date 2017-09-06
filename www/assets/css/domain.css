@@ -6,15 +6,20 @@
 
 .banniere {
   height: 150px;
-  width:75%;
-  margin-left: 12.5%;
+}
+
+.ban-image-domain {
+  text-align: center;
 }
 
 .strip-zone {
+  align-items: center;
   border: solid 1px #CAC5B8;
+  display: flex;
   float: left;
   height: 175px;
-  padding: 7px;
+  justify-content: center;
+  max-width: 50%;
   width: 175px;
 }
 
@@ -23,23 +28,23 @@
 }
 
 .stories-zone {
-  clear: both;
-  border: solid 1px #CAC5B8;
   border-radius: 12px;
-  padding: 1em;
+  border: solid 1px #CAC5B8;
+  clear: both;
   margin: 1vh 1vw;
+  padding: 1em;
 }
 
 .strip {
-  width: 150px;
-  height: 130px;
+  height: 110px;
+  width: 130px;
 }
 
 .wrapper-author {
-  width: 100%;
-  margin: 0 auto;
   border: solid 1px #CAC5B8;
   border-radius: 12px;
-  padding: 5px;
+  margin: 0 auto;
   margin-bottom: 15px;
+  padding: 5px;
+  width: 100%;
 }
