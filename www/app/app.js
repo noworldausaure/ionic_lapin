@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.directives'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.directives', 'angular-cache'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
