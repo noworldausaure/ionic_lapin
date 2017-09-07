@@ -11,12 +11,9 @@
       <div class="loading-indicator center"></div>
     </div>
     <div ng-hide="loading" class='wrapper-strip'>
-      <div class='strip-zone' ng-repeat="strip in strips | orderBy: '-date'">
+      <div class='strip-zone' ng-repeat="strip in strips | orderBy: ['date', 'id']">
         <strip-thumbnail strip="strip"></strip-thumbnail>
       </div>
     </div>
-
-    <button class=""></button>
-
   </ion-content>
 </ion-view>

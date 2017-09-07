@@ -28,31 +28,6 @@ function DomainCtrl($scope, $rootScope, $http, $stateParams, Domain, Strip, Stor
         strip.loading = false;
       });
   };
-
-  // GET STORIES
-  Story.returnStories($http, domain)
-    .then(function(stories) {
-      $scope.stories = stories.data;
-    });
-
-  // SHOW STORY FUNCTION
-  $scope.showStory = function(storyId) {
-    $scope.loading = true;
-    $rootScope.idStories = storyId;
-    if ($rootScope.idStories == 0) {
-      Strip.returnAllStrips($http, domain)
-        .then(function(strips) {
-          $scope.loading = false;
-          $scope.strips = strips.data;
-        });
-    } else {
-      Strip.returnStripsByStories($http, domain, $rootScope.idStories)
-        .then(function(strips) {
-          $scope.loading = false;
-          $scope.strips = strips.data;
-        });
-    }
-  }
 }
 
 angular.module('starter.controllers')
