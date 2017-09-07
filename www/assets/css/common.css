@@ -15,7 +15,15 @@ h1 {
 }
 
 .navbar-menu-popover {
+  margin-left: 10px;
+}
 
+.navbar-menu-popover :hover {
+  font-weight: bold;
+}
+
+.navbar-menu-popover a {
+  color: black;
 }
 
 .wrapper {
