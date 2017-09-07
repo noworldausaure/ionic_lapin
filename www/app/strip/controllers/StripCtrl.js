@@ -81,7 +81,7 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
       if (lastStripReached)
         return;
 
-      Strip.returnNthStrips($http, domain, 5, $scope.strips[index].id)
+      Strip.returnNthStrips(domain, 5, $scope.strips[index].id)
         .then(function(strips) {
           if (strips.data.length == 0) {
             lastStripReached = true;
@@ -110,6 +110,7 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
       let initialIndex;
       for (let i = 0; i < slideCount; i++) {
         let strip = $scope.strips[i];
+        
         if (strip.id == id) {
           initialIndex = i;
           break;
@@ -132,8 +133,9 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
   // STRIPS SECTION
   // Populate initial strips
-  Strip.returnNthStrips($http, domain, 5, id - 3)
+  Strip.returnNthStrips(domain, 5, id - 3)
     .then(function(strips) {
+
       $scope.strips = strips.data;
       $scope.strips.forEach(function(strip) {
         stripImageLoader(strip);
@@ -142,31 +144,12 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
   var stripImageLoader = function(strip) {
     strip.loading = true;
-    Strip.returnStripImage($http, domain, strip.id)
+    Strip.returnStripImage(domain, strip.id)
       .then(function(stripImage) {
         strip.loading = false;
         strip.file = stripImage.data[0].file;
       });
   };
-
-  // ADVERTISING SECTION
-  // Domainpub = Pub.returnPubByDomain($http,domain);
-  // Lapinpub = Pub.returnLapinPub($http);
-  //
-  // showConfirm = function(data) {
-  //   var confirmPopup = $ionicPopup.confirm({
-  //     title: '<p class=font lapin-color>'+data.name+'</p>',
-  //     template:'<img class=imgPopUp ng-src=data:image/jpeg;base64,'+data.file+'>',
-  //     cancelText:'Retour',
-  //    okText:'Plus d\'info',
-  //   });
-  //
-  //   confirmPopup.then(function(res) {
-  //     if(res) {
-  //       window.open(data.link,'_system')
-  //     }
-  //   });
-  // };
 }
 
 angular.module('starter.controllers')
