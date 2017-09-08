@@ -43,11 +43,6 @@ div[class='loading-indicator center'] {
   margin: 0 auto;
 }
 
-.wrapper-strip {
-  width: 90%;
-  margin: 0 auto;
-}
-
 ion-content {
   background-color: #F6F6E6;
 }
@@ -82,4 +77,10 @@ ion-content {
 
 .display {
   display: none;
+}
+
+.grid-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 7px;
 }
