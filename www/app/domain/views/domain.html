@@ -10,7 +10,7 @@
     <div ng-show="loading">
       <div class="loading-indicator center"></div>
     </div>
-    <div ng-hide="loading" class='wrapper-strip'>
+    <div ng-hide="loading" class='grid-wrapper'>
       <div class='strip-zone' ng-repeat="strip in strips | orderBy: ['date', 'id']">
         <strip-thumbnail strip="strip"></strip-thumbnail>
       </div>
