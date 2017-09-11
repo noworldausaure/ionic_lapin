@@ -14,22 +14,19 @@ h1 {
   width: 25px;
 }
 
-.navbar-menu-popover {
-  margin-left: 10px;
+.menu-popover-item {
+  background-color: darkgray;
+  padding-left: 10px;
 }
 
-.navbar-menu-popover :hover {
-  font-weight: bold;
-}
-
-.navbar-menu-popover a {
+.menu-popover-item a {
   color: black;
 }
 
-.wrapper {
-  width: 98vw;
-  margin: 0 auto;
+.navbar-menu-popover :hover {
+  background-color: gray;
 }
+
 
 .loading-indicator {
   background-image: url('../img/loading-bar.gif');
@@ -44,7 +41,7 @@ div[class='loading-indicator center'] {
 }
 
 ion-content {
-  background-color: #F6F6E6;
+  background-color: darkgray;
 }
 
 .font {
