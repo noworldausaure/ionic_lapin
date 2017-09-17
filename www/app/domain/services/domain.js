@@ -5,7 +5,7 @@ angular.module('starter.services')
 
     if (!CacheFactory.get('domainCache')) {
 
-      stripCache = CacheFactory('domainCache', {
+      domainCache = CacheFactory('domainCache', {
         maxAge: 24 * 60 * 60 * 1000,
         deleteOnExpire: 'aggressive',
         storageMode: 'localStorage'
@@ -16,12 +16,12 @@ angular.module('starter.services')
     return {
       returnDomain: function() {
         return $http.get(`${Api.baseUrl}infoGeneral`, {
-          cache: CacheFactory.get('domainCache')
+          cache: domainCache
         });
       },
       returnInfo: function(domain) {
         return $http.get(`${Api.baseUrl}info/${domain}`, {
-          cache: CacheFactory.get('domainCache')
+          cache: domainCache
         });
       }
     };

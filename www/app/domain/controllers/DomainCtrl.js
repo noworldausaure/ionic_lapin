@@ -1,4 +1,4 @@
-function DomainCtrl($scope, $rootScope, $stateParams, Domain, Strip, Story) {
+function DomainCtrl($scope, $rootScope, $stateParams, Domain, Strip,) {
 
   const INITIAL_STRIPS_COUNT = 20;
 

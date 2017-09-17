@@ -1,9 +1,10 @@
 function HomeCtrl($scope, $http, Domain) {
   $scope.loading = true;
-  $scope.domain = Domain.returnDomain($http)
-    .then(function(domain) {
+
+  Domain.returnDomain($http)
+    .then(function(domains) {
       $scope.loading = false;
-      $scope.dataDomain = domain.data;
+      $scope.domains = domains.data;
     });
 }
 

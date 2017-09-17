@@ -1,9 +1,25 @@
 <ion-popover-view>
-  <ion-content>
-    <div class="navbar-menu-popover"><a href="#" onclick="window.open('http://librairie.lapin.org/', '_system', 'location=yes'); return false;">Librairie</a></div>
-    <div class="navbar-menu-popover"><a href="#">Histoires</a></div>
-    <div class="navbar-menu-popover"><a href="#">Strips</a></div>
-    <div class="navbar-menu-popover"><a href="#">Favoris</a></div>
-    <div class="navbar-menu-popover"><a href="#">Archives</a></div>
-  </ion-content>
+    <ion-content>
+
+        <div class="navbar-menu-popover">
+            <a href="#" onclick="window.open('http://librairie.lapin.org/', '_system', 'location=yes'); return false;">Librairie</a>
+        </div>
+
+        <div class="navbar-menu-popover" ng-show="showStoryLink" ui-sref="stories({domain: domain.id })">
+            Histoires
+        </div>
+
+        <div class="navbar-menu-popover">
+            <a href="#">Strips</a>
+        </div>
+
+        <div class="navbar-menu-popover">
+            <a href="#">Favoris</a>
+        </div>
+
+        <div class="navbar-menu-popover">
+            <a href="#">Archives</a>
+        </div>
+
+    </ion-content>
 </ion-popover-view>

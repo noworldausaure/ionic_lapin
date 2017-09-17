@@ -8,7 +8,7 @@
       <div class="loading-indicator center"></div>
     </div>
     <div ng-hide="loading" class='grid-wrapper'>
-      <div ng-repeat="domain in dataDomain" class="favicon">
+      <div ng-repeat="domain in domains" class="favicon">
         <img ui-sref="strips({domain: domain.short_name})" src='data:image/jpeg;base64,{{domain.favicon}}'>
         <div class="center">{{domain.short_name}}</div>
       </div>

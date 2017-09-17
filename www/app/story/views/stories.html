@@ -1,0 +1,7 @@
+<ion-view view-title="{{ domain }}">
+    <ion-content>
+        <p ng-repeat="story in stories | orderBy: ['date', 'id']">
+            {{ story.title }}
+        </p>
+    </ion-content>
+</ion-view>
