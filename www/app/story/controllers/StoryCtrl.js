@@ -1,7 +1,5 @@
 function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
 
-    console.log("Init story controller");
-
     const STRIPS_LOAD_BULK_SIZE = 10;
 
     let domainName = $stateParams.domain;
@@ -14,7 +12,6 @@ function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
 
     let offset = 0;
 
-    console.log(`Story id: ${storyId}`);
     Story.returnStory(domainName, storyId)
         .then(function (response) {
 

@@ -28,13 +28,10 @@ angular.module("starter.services")
 
                 offset = typeof offset !== 'undefined' ? offset : 0;
 
-                console.log(`Load ${number} strips from offset ${offset}`);
-
                 return $http.get(`${Api.baseUrl}strips/stories/${domain}/${storyId}/${number}/${offset}`, {
                     cache: CacheFactory.get('storyCache')
                 }).then(function (response) {
 
-                    console.log(response.data);
                     return response;
                 });
             }
