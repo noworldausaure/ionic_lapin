@@ -12,9 +12,9 @@ angular.module("starter.services")
         }
 
         return {
-            returnStory: function (domain, id) {
+            returnStory: function (domain, storyId) {
 
-                return $http.get(`${Api.baseUrl}stories/domain/{storyId}`)
+                return $http.get(`${Api.baseUrl}stories/${domain}/${storyId}`)
             },
             returnStories: function (domain, number, offset) {
 

@@ -36,7 +36,6 @@ function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
 
     $scope.loadMore = function () {
 
-        console.log("load more");
         Story.returnStripsByStory(domainName, storyId, STRIPS_LOAD_BULK_SIZE, offset)
             .then(function (response) {
 
