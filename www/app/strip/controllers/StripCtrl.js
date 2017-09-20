@@ -1,12 +1,12 @@
-function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
-  $stateParams, $ionicSlideBoxDelegate, Strip, Pub) {
+function StripCtrl($rootScope, $scope, $http,
+  $stateParams, Strip, Pub) {
 
-  var idStories = $rootScope.idStories;
-  var domain = $stateParams.domain;
-  var id = $stateParams.id;
-  var count = 0;
-  var pubDomain = false;
-  $scope.domain = domain;
+  let domainName = $stateParams.domain;
+  let stripId = $stateParams.id;
+  let count = 0;
+  let pubDomain = false;
+
+  $rootScope.domain = domainName;
 
   // Event listeners on slide modifications
   var slideModifListeners = [];
@@ -26,13 +26,16 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
   };
 
   $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
+
     $scope.slider = data.slider;
     console.log("slider initialized");
   });
 
   let firstStripReached = false;
   let lastStripReached = false;
+
   $scope.$on("$ionicSlides.slideChangeEnd", function(event, data) {
+
     console.log(`slide changed, index=${data.slider.activeIndex}, indexOfLast=${data.slider.slides.length - 1}, end=${data.slider.isEnd}`);
     let index = data.slider.activeIndex;
     let slider = $scope.slider;
@@ -50,14 +53,16 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
       console.log(`Load ${count} strips from offset ${offset}`);
 
       Strip.returnNthStrips(
-          $http, domain, count, offset)
+          $http, domainName, count, offset)
         .then(function(strips) {
 
           // If strips coming from api are already in the loaded strips
           // that's mean we reached the first strip
           let newStrip = strips.data[0];
           for (let strip of $scope.strips) {
-            if (strip.id == newStrip.id) {
+
+            if (strip.id === newStrip.id) {
+
               firstStripReached = true;
               console.log("firstStrip reached");
               return;
@@ -66,10 +71,12 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
           // Listen for slide modification to be effective
           slideModifListeners.push(new SlideModificationEvent(function() {
+
             slider.slideTo(strips.data.length, 0);
           }));
 
           strips.data.forEach(function(strip) {
+
             $scope.strips.unshift(strip);
             stripImageLoader(strip);
           });
@@ -81,9 +88,11 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
       if (lastStripReached)
         return;
 
-      Strip.returnNthStrips(domain, 5, $scope.strips[index].id)
+      Strip.returnNthStrips(domainName, 5, $scope.strips[index].id)
         .then(function(strips) {
-          if (strips.data.length == 0) {
+
+          if (strips.data.length === 0) {
+
             lastStripReached = true;
             console.log("last strip reached");
             return;
@@ -91,7 +100,9 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
           console.log(strips.data);
           $scope.strips = $scope.strips.concat(strips.data);
+
           $scope.strips.forEach(function(strip) {
+
             stripImageLoader(strip);
           });
         });
@@ -100,18 +111,21 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
   // Watch slides array for initial slides loading and set initial slide active index when loaded
   let slidesWatcher = $scope.$watch("slider.slides", function() {
+
     let slider = $scope.slider;
     let slideCount;
 
     // Slide to initial slide when slides are loaded in the slider
-    if (slider != undefined && (slideCount = slider.slides.length) > 0) {
+    if (slider !== undefined && (slideCount = slider.slides.length) > 0) {
 
       //Get the index of the queried strip
       let initialIndex;
       for (let i = 0; i < slideCount; i++) {
+
         let strip = $scope.strips[i];
         
-        if (strip.id == id) {
+        if (strip.id === stripId) {
+
           initialIndex = i;
           break;
         }
@@ -126,26 +140,32 @@ function StripCtrl($scope, $ionicPopup, $location, $rootScope, $http,
 
   // Event listener for slide modifications
   $scope.$watch("slider.slides", function() {
+
     slideModifListeners.forEach(function(listener) {
+
       listener.onModification();
     });
   });
 
   // STRIPS SECTION
   // Populate initial strips
-  Strip.returnNthStrips(domain, 5, id - 3)
+  Strip.returnNthStrips(domainName, 5, stripId - 3)
     .then(function(strips) {
 
       $scope.strips = strips.data;
       $scope.strips.forEach(function(strip) {
+
         stripImageLoader(strip);
       });
     });
 
-  var stripImageLoader = function(strip) {
+  let stripImageLoader = function(strip) {
+
     strip.loading = true;
-    Strip.returnStripImage(domain, strip.id)
+
+    Strip.returnStripImage(domainName, strip.id)
       .then(function(stripImage) {
+
         strip.loading = false;
         strip.file = stripImage.data[0].file;
       });

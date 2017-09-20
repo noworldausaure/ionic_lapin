@@ -1,19 +1,29 @@
 <ion-view view-title='{{domain}}'>
-  <ion-content class="padding">
-    <div class='wrapper-author'>
-      <div class="ban-image-domain">
-        <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}" />
-      </div>
-      <p class='desc'>{{info.description}}</p>
-      <p>par <strong> {{info.author}}</strong></p>
-    </div>
-    <div ng-show="loading">
-      <div class="loading-indicator center"></div>
-    </div>
-    <div ng-hide="loading" class='grid-wrapper'>
-      <div class='strip-zone' ng-repeat="strip in strips | orderBy: ['date', 'id']">
-        <strip-thumbnail strip="strip"></strip-thumbnail>
-      </div>
-    </div>
-  </ion-content>
+    <ion-content class="padding">
+
+        <div class='wrapper-author'>
+
+            <div class="ban-image-domain">
+                <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>
+            </div>
+            <p class='desc'>{{info.description}}</p>
+            <p>par <strong> {{info.author}}</strong></p>
+
+        </div>
+
+        <div class='grid-wrapper'>
+
+            <div class='strip-zone' ng-repeat="strip in strips | orderBy: ['date', 'id']">
+                <strip-thumbnail strip="strip" ui-sref="strip({domain: domain, id: strip.id})"></strip-thumbnail>
+            </div>
+
+        </div>
+
+        <ion-infinite-scroll
+                ng-if="canLoadMore"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+    </ion-content>
 </ion-view>

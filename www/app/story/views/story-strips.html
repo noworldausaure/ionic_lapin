@@ -1,0 +1,17 @@
+<ion-view view-title='{{domain}} - {{ story.title }}'>
+  <ion-content class="padding">
+
+    <div class='grid-wrapper'>
+      <div class='strip-zone' ng-repeat="strip in strips | orderBy: ['date', 'id']">
+        <strip-thumbnail strip="strip" ui-sref="story_strips_slide({domain: domain, storyId: storyId, stripId: strip.id})"></strip-thumbnail>
+      </div>
+    </div>
+
+    <ion-infinite-scroll
+            ng-if="canLoadMore"
+            on-infinite="loadMore()"
+            distance="1%">
+    </ion-infinite-scroll>
+
+  </ion-content>
+</ion-view>

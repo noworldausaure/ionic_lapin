@@ -1,0 +1,13 @@
+<ion-view view-title="{{domain}} - {{ story.title }}">
+  <ion-content class="padding" scroll="false">
+
+    <ion-slides options="sliderOptions" slider="slider">
+
+      <ion-slide-page ng-repeat="strip in strips | orderBy: ['date', 'id']">
+        <strip-view strip="strip"></strip-view>
+      </ion-slide-page>
+      
+    </ion-slides>
+
+  </ion-content>
+</ion-view>

@@ -1,28 +1,42 @@
 angular.module("starter.services")
-  .factory("Story", function($http, CacheFactory, Api) {
+    .factory("Story", function ($http, CacheFactory, Api) {
 
-    var storyCache;
+        if (!CacheFactory.get('storyCache')) {
 
-    if (!CacheFactory.get('storyCache')) {
+            CacheFactory('storyCache', {
+                maxAge: 60 * 60 * 1000,
+                deleteOnExpire: 'aggressive',
+                storageMode: 'localStorage'
+            });
 
-      stripCache = CacheFactory('storyCache', {
-        maxAge: 60 * 60 * 1000,
-        deleteOnExpire: 'aggressive',
-        storageMode: 'localStorage'
-      });
+        }
 
-    }
+        return {
+            returnStory: function (domain, id) {
 
-    return {
-      returnStories: function(domain) {
-        return $http.get(`${Api.baseUrl}stories/${domain}`, {
-          cache: CacheFactory.get('storyCache')
-        })
-      },
-      returnStripsByStories: function(domain, id) {
-        return stripCache.get(`${Api.baseUrl}strips/stories/${domain}/${id}`, {
-          cache: CacheFactory.get('storyCache')
-        });
-      }
-    }
-  });
+                return $http.get(`${Api.baseUrl}stories/domain/{storyId}`)
+            },
+            returnStories: function (domain, number, offset) {
+
+                offset = typeof offset !== 'undefined' ? offset : 0;
+
+                return $http.get(`${Api.baseUrl}stories/${domain}/${number}/${offset}`, {
+                    cache: CacheFactory.get('storyCache')
+                })
+            },
+            returnStripsByStory: function (domain, storyId, number, offset) {
+
+                offset = typeof offset !== 'undefined' ? offset : 0;
+
+                console.log(`Load ${number} strips from offset ${offset}`);
+
+                return $http.get(`${Api.baseUrl}strips/stories/${domain}/${storyId}/${number}/${offset}`, {
+                    cache: CacheFactory.get('storyCache')
+                }).then(function (response) {
+
+                    console.log(response.data);
+                    return response;
+                });
+            }
+        }
+    });

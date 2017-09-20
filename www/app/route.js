@@ -20,6 +20,16 @@ angular.module('starter')
                 url: '/stories/:domain',
                 templateUrl: 'app/story/views/stories.html',
                 controller: 'StoryListCtrl'
+            })
+            .state('story_strips', {
+                url: '/story/:domain/:storyId',
+                templateUrl: 'app/story/views/story-strips.html',
+                controller: 'StoryCtrl'
+            })
+            .state('story_strips_slide', {
+                url: '/story/:domain/:storyId/:stripId',
+                templateUrl: 'app/story/views/story-slide.html',
+                controller: 'StorySlideCtrl'
             });
         $urlRouterProvider.otherwise('/home');
     });
