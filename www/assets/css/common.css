@@ -18,6 +18,7 @@ h1 {
   background-color: darkgray;
   height: 35px;
   padding-left: 10px;
+  padding-top: 7px;
 }
 
 .menu-popover-item a {
