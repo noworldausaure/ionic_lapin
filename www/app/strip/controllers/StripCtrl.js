@@ -9,14 +9,14 @@ function StripCtrl($rootScope, $scope, $http,
   $rootScope.domain = domainName;
 
   // Event listeners on slide modifications
-  var slideModifListeners = [];
+  let slideModifListeners = [];
 
   function SlideModificationEvent(callback) {
 
     this.onModification = function() {
       callback();
     };
-  };
+  }
 
   // SET UP SLIDER
   $scope.sliderOptions = {
@@ -52,8 +52,7 @@ function StripCtrl($rootScope, $scope, $http,
 
       console.log(`Load ${count} strips from offset ${offset}`);
 
-      Strip.returnNthStrips(
-          $http, domainName, count, offset)
+      Strip.returnNthStrips(domainName, count, offset)
         .then(function(strips) {
 
           // If strips coming from api are already in the loaded strips

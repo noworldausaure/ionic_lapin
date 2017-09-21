@@ -47,10 +47,6 @@ function DomainCtrl($rootScope, $scope, $stateParams, Domain, Strip) {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
     };
-
-    $scope.$on('$stateChangeSuccess', function () {
-        $scope.loadMore();
-    });
 }
 
 angular.module('starter.controllers')
