@@ -24,6 +24,7 @@
         </div>
 
         <ion-infinite-scroll
+                ng-hide="loading"
                 ng-if="canLoadMore"
                 on-infinite="loadMore()"
                 distance="1%">
