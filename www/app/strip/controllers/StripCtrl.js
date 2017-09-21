@@ -1,174 +1,194 @@
-function StripCtrl($rootScope, $scope, $http,
-  $stateParams, Strip, Pub) {
+function StripCtrl($rootScope, $scope, $stateParams, Strip, Pub) {
 
-  let domainName = $stateParams.domain;
-  let stripId = $stateParams.id;
-  let count = 0;
-  let pubDomain = false;
+    let domainName = $stateParams.domain;
+    let stripId = $stateParams.stripId;
+    let count = 0;
+    let lastStripId;
+    let pubDomain = false;
 
-  $rootScope.domain = domainName;
+    $rootScope.domain = domainName;
 
-  // Event listeners on slide modifications
-  let slideModifListeners = [];
+    // Event listeners on slide modifications
+    let slideModifListeners = [];
 
-  function SlideModificationEvent(callback) {
+    function SlideModificationEvent(callback) {
 
-    this.onModification = function() {
-      callback();
+        this.onModification = function () {
+            callback();
+        };
+    }
+
+    // SET UP SLIDER
+    $scope.sliderOptions = {
+        zoom: true,
+        pagination: false,
+        direction: 'horizontal'
     };
-  }
 
-  // SET UP SLIDER
-  $scope.sliderOptions = {
-    zoom: true,
-    pagination: false,
-    direction: 'horizontal'
-  };
+    $scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
 
-  $scope.$on("$ionicSlides.sliderInitialized", function(event, data) {
+        $scope.slider = data.slider;
+    });
 
-    $scope.slider = data.slider;
-    console.log("slider initialized");
-  });
+    let firstStripReached = false;
+    let lastStripReached = false;
 
-  let firstStripReached = false;
-  let lastStripReached = false;
+    $scope.$on("$ionicSlides.slideChangeEnd", function (event, data) {
 
-  $scope.$on("$ionicSlides.slideChangeEnd", function(event, data) {
+        // console.log(`slide changed, index=${data.slider.activeIndex}, indexOfLast=${data.slider.slides.length - 1}, end=${data.slider.isEnd}`);
+        let index = data.slider.activeIndex;
+        let slider = $scope.slider;
+        let currentStripId = $scope.strips[index].id;
 
-    console.log(`slide changed, index=${data.slider.activeIndex}, indexOfLast=${data.slider.slides.length - 1}, end=${data.slider.isEnd}`);
-    let index = data.slider.activeIndex;
-    let slider = $scope.slider;
+        // If we reach the start of the slider, we load data
+        if (slider.isBeginning) {
 
-    // If we reach the start of the slider, we'll load data
-    if (slider.isBeginning) {
+            if (firstStripReached)
+                return;
 
-      if (firstStripReached)
-        return;
+            let count = 5;
+            let offset = Math.max(0, currentStripId - 5);
 
-      let currentStripId = $scope.strips[index].id;
-      let count = Math.min(Math.max(currentStripId - 1, 0), 5);
-      let offset = Math.max(0, currentStripId - 5);
+            console.log(`Load ${count} strips from offset ${offset}`);
 
-      console.log(`Load ${count} strips from offset ${offset}`);
+            Strip.returnNthStrips(domainName, count, offset)
+                .then(function (response) {
 
-      Strip.returnNthStrips(domainName, count, offset)
-        .then(function(strips) {
+                    // If strips coming from api are already in the loaded strips
+                    // that's mean we reached the first strip
+                    let newStrip = response.data[0];
+                    for (let strip of $scope.strips) {
 
-          // If strips coming from api are already in the loaded strips
-          // that's mean we reached the first strip
-          let newStrip = strips.data[0];
-          for (let strip of $scope.strips) {
+                        if (strip.id === newStrip.id) {
 
-            if (strip.id === newStrip.id) {
+                            firstStripReached = true;
+                            console.log("firstStrip reached");
+                            return;
+                        }
+                    }
 
-              firstStripReached = true;
-              console.log("firstStrip reached");
-              return;
-            }
-          }
+                    let loadedCount = 0; // Store  how many strips are retained
+                    response.data.forEach(function (strip) {
 
-          // Listen for slide modification to be effective
-          slideModifListeners.push(new SlideModificationEvent(function() {
+                        // Check if we already have the strip loaded
+                        let contains = false;
 
-            slider.slideTo(strips.data.length, 0);
-          }));
+                        for (let i = 0; i < $scope.strips.length; i++) {
 
-          strips.data.forEach(function(strip) {
+                            if ($scope.strips[i].id === strip.id) {
+                                contains = true;
+                                console.log(`Strip ${strip.id} already loaded`);
 
-            $scope.strips.unshift(strip);
-            stripImageLoader(strip);
-          });
-        });
-    }
-    // if we reached the end of the slider, we'll load data
-    else if (slider.isEnd) {
+                                break;
+                            }
+                        }
 
-      if (lastStripReached)
-        return;
+                        if (!contains) {
 
-      Strip.returnNthStrips(domainName, 5, $scope.strips[index].id)
-        .then(function(strips) {
+                            loadedCount++;
 
-          if (strips.data.length === 0) {
+                            $scope.strips.unshift(strip);
+                            stripImageLoader(strip);
+                        }
+                    });
 
-            lastStripReached = true;
-            console.log("last strip reached");
-            return;
-          }
-
-          console.log(strips.data);
-          $scope.strips = $scope.strips.concat(strips.data);
-
-          $scope.strips.forEach(function(strip) {
-
-            stripImageLoader(strip);
-          });
-        });
-    }
-  });
-
-  // Watch slides array for initial slides loading and set initial slide active index when loaded
-  let slidesWatcher = $scope.$watch("slider.slides", function() {
-
-    let slider = $scope.slider;
-    let slideCount;
-
-    // Slide to initial slide when slides are loaded in the slider
-    if (slider !== undefined && (slideCount = slider.slides.length) > 0) {
-
-      //Get the index of the queried strip
-      let initialIndex;
-      for (let i = 0; i < slideCount; i++) {
-
-        let strip = $scope.strips[i];
-        
-        if (strip.id === stripId) {
-
-          initialIndex = i;
-          break;
+                    // Listen for slide modification to be effective
+                    slideModifListeners.push(new SlideModificationEvent(function () {
+                        slider.slideTo(loadedCount, 0);
+                    }));
+                });
         }
-      }
-      console.log("Slide to init slide");
-      slider.slideTo(initialIndex, 0);
+        // if we reached the end of the slider, we load data
+        else if (slider.isEnd) {
 
-      // Unwatch
-      slidesWatcher();
-    }
-  });
+            if (lastStripReached)
+                return;
 
-  // Event listener for slide modifications
-  $scope.$watch("slider.slides", function() {
+            console.log(lastStripId);
+            Strip.returnNthStrips(domainName, 5, lastStripId + 1)
+                .then(function (response) {
 
-    slideModifListeners.forEach(function(listener) {
+                    if (response.data.length === 0) {
 
-      listener.onModification();
+                        lastStripReached = true;
+                        console.log("last strip reached");
+                        return;
+                    }
+
+                    $scope.strips = $scope.strips.concat(response.data);
+
+                    lastStripId = parseInt(response.data[response.data.length - 1].id);
+
+                    response.data.forEach(function (strip) {
+
+                        stripImageLoader(strip);
+                    });
+                });
+        }
     });
-  });
 
-  // STRIPS SECTION
-  // Populate initial strips
-  Strip.returnNthStrips(domainName, 5, stripId - 3)
-    .then(function(strips) {
+    // Watch slides array for initial slides loading and set initial slide active index when loaded
+    let slidesWatcher = $scope.$watch("slider.slides", function () {
 
-      $scope.strips = strips.data;
-      $scope.strips.forEach(function(strip) {
+        let slider = $scope.slider;
+        let slideCount;
 
-        stripImageLoader(strip);
-      });
+        // Slide to initial slide when slides are loaded in the slider
+        if (slider !== undefined && (slideCount = slider.slides.length) > 0) {
+
+            //Get the index of the queried strip
+            let initialIndex;
+            for (let i = 0; i < slideCount; i++) {
+
+                let strip = $scope.strips[i];
+
+                if (strip.id === stripId) {
+
+                    initialIndex = i;
+                    break;
+                }
+            }
+            slider.slideTo(initialIndex, 0);
+
+            // Unwatch
+            slidesWatcher();
+        }
     });
 
-  let stripImageLoader = function(strip) {
+    // Event listener for slide modifications
+    $scope.$watch("slider.slides", function () {
 
-    strip.loading = true;
+        slideModifListeners.forEach(function (listener) {
 
-    Strip.returnStripImage(domainName, strip.id)
-      .then(function(stripImage) {
+            listener.onModification();
+        });
+    });
 
-        strip.loading = false;
-        strip.file = stripImage.data[0].file;
-      });
-  };
+    // STRIPS SECTION
+    // Populate initial strips
+    Strip.returnNthStrips(domainName, 5, stripId - 3)
+        .then(function (response) {
+
+            lastStripId = parseInt(response.data[response.data.length - 1].id);
+
+            $scope.strips = response.data;
+            $scope.strips.forEach(function (strip) {
+
+                stripImageLoader(strip);
+            });
+        });
+
+    let stripImageLoader = function (strip) {
+
+        strip.loading = true;
+
+        Strip.returnStripImage(domainName, strip.id)
+            .then(function (stripImage) {
+
+                strip.loading = false;
+                strip.file = stripImage.data[0].file;
+            });
+    };
 }
 
 angular.module('starter.controllers')

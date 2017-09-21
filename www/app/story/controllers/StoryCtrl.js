@@ -10,7 +10,7 @@ function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
     $scope.canLoadMore = true;
     $scope.strips = [];
 
-    let offset = 0;
+    let lastStripId = 0;
 
     Story.returnStory(domainName, storyId)
         .then(function (response) {
@@ -33,17 +33,19 @@ function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
 
     $scope.loadMore = function () {
 
-        Story.returnStripsByStory(domainName, storyId, STRIPS_LOAD_BULK_SIZE, offset)
+        Story.returnStripsByStory(domainName, storyId, STRIPS_LOAD_BULK_SIZE, lastStripId)
             .then(function (response) {
 
                 $scope.strips = $scope.strips.concat(response.data);
                 $scope.canLoadMore = response.data.length === STRIPS_LOAD_BULK_SIZE;
 
-                $scope.strips.forEach(function (strip) {
+                response.data.forEach(function (strip) {
                     stripImageLoader(strip);
                 });
 
-                offset += response.data.length;
+                getSlider().prependSlide();
+
+                lastStripId = parseInt(response.data[response.data.length - 1].id) + 1;
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });

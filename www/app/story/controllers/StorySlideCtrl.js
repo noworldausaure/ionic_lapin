@@ -5,7 +5,7 @@ function StorySlideCtrl($rootScope, $scope,
     let storyId = $stateParams.storyId;
     let stripId = $stateParams.stripId;
     let count = 0;
-    let offset = 0;
+    let lastStripId;
     let pubDomain = false;
 
     $rootScope.domain = domainName;
@@ -46,15 +46,15 @@ function StorySlideCtrl($rootScope, $scope,
         // console.log(`slide changed, index=${data.slider.activeIndex}, indexOfLast=${data.slider.slides.length - 1}, end=${data.slider.isEnd}`);
         let index = data.slider.activeIndex;
         let slider = $scope.slider;
+        let currentStripId = $scope.strips[index].id;
 
-        // If we reach the start of the slider, we'll load data
+        // If we reach the start of the slider, we load data
         if (slider.isBeginning) {
 
             if (firstStripReached)
                 return;
 
-            let currentStripId = $scope.strips[index].id;
-            let count = Math.min(Math.max(currentStripId - 1, 0), 5);
+            let count = 5;
             let offset = Math.max(0, currentStripId - 5);
 
             console.log(`Load ${count} strips from offset ${offset}`);
@@ -75,39 +75,59 @@ function StorySlideCtrl($rootScope, $scope,
                         }
                     }
 
-                    // Listen for slide modification to be effective
-                    slideModifListeners.push(new SlideModificationEvent(function () {
-
-                        slider.slideTo(response.data.length, 0);
-                    }));
-
+                    let loadedCount = 0; // Store  how many strips are retained
                     response.data.forEach(function (strip) {
 
-                        $scope.strips.unshift(strip);
-                        stripImageLoader(strip);
+                        // Check if we already have the strip loaded
+                        let contains = false;
+
+                        for (let i = 0; i < $scope.strips.length; i++) {
+
+                            if ($scope.strips[i].id === strip.id) {
+                                contains = true;
+                                console.log(`Strip ${strip.id} already loaded`);
+
+                                break;
+                            }
+                        }
+
+                        if (!contains) {
+
+                            loadedCount++;
+
+                            $scope.strips.unshift(strip);
+                            stripImageLoader(strip);
+                        }
                     });
+
+                    // Listen for slide modification to be effective
+                    slideModifListeners.push(new SlideModificationEvent(function () {
+                        slider.slideTo(loadedCount, 0);
+                    }));
                 });
         }
-        // if we reached the end of the slider, we'll load data
+        // if we reached the end of the slider, we load data
         else if (slider.isEnd) {
 
             if (lastStripReached)
                 return;
 
-            Story.returnStripsByStory(domainName, storyId, 5, parseInt($scope.strips[index].id) + 1)
-                .then(function (strips) {
+            console.log(lastStripId);
+            Story.returnStripsByStory(domainName, storyId, 5, lastStripId + 1)
+                .then(function (response) {
 
-                    if (strips.data.length === 0) {
+                    if (response.data.length === 0) {
 
                         lastStripReached = true;
                         console.log("last strip reached");
                         return;
                     }
 
-                    console.log(strips.data);
-                    $scope.strips = $scope.strips.concat(strips.data);
+                    $scope.strips = $scope.strips.concat(response.data);
 
-                    $scope.strips.forEach(function (strip) {
+                    lastStripId = parseInt(response.data[response.data.length - 1].id);
+
+                    response.data.forEach(function (strip) {
 
                         stripImageLoader(strip);
                     });
@@ -154,11 +174,13 @@ function StorySlideCtrl($rootScope, $scope,
 
     // STRIPS SECTION
     // Populate initial strips
-    Story.returnStripsByStory(domainName, storyId, 5, storyId - 3)
+    Story.returnStripsByStory(domainName, storyId, 5, stripId - 3)
         .then(function (response) {
 
+            lastStripId = parseInt(response.data[response.data.length - 1].id);
+
             $scope.strips = response.data;
-            $scope.strips.forEach(function (strip) {
+            response.data.forEach(function (strip) {
 
                 stripImageLoader(strip);
             });
