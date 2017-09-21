@@ -1,14 +1,14 @@
-<div>
+<div class="inline-center">
 
     <p class="font lapin-color strips-title">{{strip.title}} </p>
 
     <div class="wrapper-strip-domain">
 
         <div ng-show="strip.loading">
-            <div class="loading-indicator center"></div>
+            <ion-spinner class="spinner-energized"></ion-spinner>
         </div>
 
-        <img ng-hide="strip.loading" class="strip" src="data:image/jpeg;base64,{{strip.file}}">
+        <img ng-hide="strip.loading" class="strip" src="data:image/jpeg;base64,{{strip.file}}"><br />
 
     </div>
 

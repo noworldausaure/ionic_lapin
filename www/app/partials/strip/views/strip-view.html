@@ -1,7 +1,10 @@
-<h1 class="center">{{strip.id}} -- {{strip.title}}</h1>
-<div class="center">
-  <div ng-show="strip.loading">
-    <div class="loading-indicator center"></div>
-  </div>
-  <img ng-hide="strip.loading" class='strip center' src="data:image/jpeg;base64,{{strip.file}}">
+<h1 class="inline-center">{{strip.id}} -- {{strip.title}}</h1>
+<div class="inline-center">
+
+    <div ng-show="strip.loading">
+        <ion-spinner class="spinner-energized"></ion-spinner>
+    </div>
+
+    <img ng-hide="strip.loading" class='strip' src="data:image/jpeg;base64,{{strip.file}}">
+
 </div>
