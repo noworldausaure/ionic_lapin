@@ -1,7 +1,11 @@
 <ion-view view-title='{{domain}}'>
     <ion-content>
 
-        <div class='wrapper-author'>
+        <div class="inline-center" ng-show="loading">
+            <ion-spinner class="spinner-energized"></ion-spinner>
+        </div>
+
+        <div class='wrapper-author' ng-hide="loading">
 
             <div class="ban-image-domain">
                 <img class='banniere' src="data:image/jpeg;base64,{{info.ban_picture}}"/>

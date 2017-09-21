@@ -15,6 +15,7 @@ function DomainCtrl($rootScope, $scope, $stateParams, Domain, Strip) {
         .then(function (response) {
 
             $scope.info = response.data[0];
+            $scope.loading = false;
         });
 
     let stripImageLoader = function (strip) {
