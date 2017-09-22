@@ -12,8 +12,13 @@ h1 {
     width: 25px;
 }
 
-.menu-popover-item {
+.navbar-menu-popover {
   background-color: #BF681A;
+  height: 300px;
+}
+
+.menu-popover-item {
+  border-bottom: dashed 1px #F6F6E6;
   height: 35px;
   padding-left: 10px;
   padding-top: 7px;
@@ -21,9 +26,11 @@ h1 {
 
 .menu-popover-item a {
   color: #F6F6E6;
+  font-family: pacificoregular, "Times New Roman", serif;
+  font-size: 1rem;
 }
 
-.navbar-menu-popover:hover {
+.navbar-menu-popover :hover {
   color: rgb(0, 200, 175);
 }
 
