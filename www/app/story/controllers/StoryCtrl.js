@@ -43,8 +43,6 @@ function StoryCtrl($rootScope, $scope, $stateParams, Story, Strip) {
                     stripImageLoader(strip);
                 });
 
-                getSlider().prependSlide();
-
                 lastStripId = parseInt(response.data[response.data.length - 1].id) + 1;
 
                 $scope.$broadcast('scroll.infiniteScrollComplete');
