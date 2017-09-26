@@ -27,7 +27,7 @@ h1 {
 .menu-popover-item a {
   color: #F6F6E6;
   font-family: pacificoregular, "Times New Roman", serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .navbar-menu-popover :hover {
@@ -55,7 +55,7 @@ ion-content {
 .title-strip {
     font-size: 2em;
     line-height: 1.5em;
-    font-family: pacifico, serif;
+    font-family: 'pacifico', serif;
 }
 
 .inline-center {
@@ -69,5 +69,5 @@ ion-content {
 .grid-wrapper {
     width: 100%;
     margin: 0 auto;
-    padding: 7px;
+    padding: 23px;
 }
