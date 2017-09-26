@@ -1,59 +1,54 @@
-function DomainCtrl($scope, $rootScope, $http, $stateParams, Domain, Strip, Story) {
-  var domain = $stateParams.domain;
-  $scope.loading = true;
-  $scope.domain = domain;
+function DomainCtrl($rootScope, $scope, $stateParams, Domain, Strip) {
 
-  //GET INFO domain
-  Domain.returnInfo($http, domain)
-    .then(function(info) {
-      $scope.info = info.data[0];
-    });
+    const STRIPS_LOAD_BULK_SIZE = 10;
 
-  // GET STRIPS
-  Strip.returnAllStrips($http, domain)
-    .then(function(strips) {
-      $scope.strips = strips.data;
-      $scope.loading = false;
-      $scope.strips.forEach(function(strip) {
-        strip.domain = $scope.domain;
-        stripImageLoader(strip);
-      });
-    });
+    let domainName = $stateParams.domain;
+    let offset = 0;
 
-  var stripImageLoader = function(strip) {
-    strip.loading = true;
-    Strip.returnStripImage($http, domain, strip.id)
-      .then(function(stripImage) {
-        strip.file = stripImage.data[0].file;
-        strip.loading = false;
-      });
-  };
-
-  // GET STORIES
-  Story.returnStories($http, domain)
-    .then(function(stories) {
-      $scope.stories = stories.data;
-    });
-
-  // SHOW STORY FUNCTION
-  $scope.showStory = function(storyId) {
     $scope.loading = true;
-    $rootScope.idStories = storyId;
-    if ($rootScope.idStories == 0) {
-      Strip.returnAllStrips($http, domain)
-        .then(function(strips) {
-          $scope.loading = false;
-          $scope.strips = strips.data;
+    $rootScope.domain = domainName;
+    $scope.canLoadMore = true;
+    $scope.strips = [];
+
+    //GET INFO domain
+    Domain.returnInfo(domainName)
+        .then(function (response) {
+
+            $scope.info = response.data[0];
+            $scope.loading = false;
         });
-    } else {
-      Strip.returnStripsByStories($http, domain, $rootScope.idStories)
-        .then(function(strips) {
-          $scope.loading = false;
-          $scope.strips = strips.data;
-        });
-    }
-  }
+
+    let stripImageLoader = function (strip) {
+
+        strip.loading = true;
+
+        Strip.returnStripImage(domainName, strip.id)
+            .then(function (stripImage) {
+
+                strip.file = stripImage.data[0].file;
+                strip.loading = false;
+            });
+    };
+
+    $scope.loadMore = function () {
+
+        Strip.returnNthStrips(domainName, STRIPS_LOAD_BULK_SIZE, offset)
+            .then(function (response) {
+
+                $scope.strips.push.apply($scope.strips, response.data);
+                $scope.canLoadMore = response.data.length === STRIPS_LOAD_BULK_SIZE;
+
+                $scope.strips.forEach(function (strip) {
+
+                    stripImageLoader(strip);
+                });
+
+                offset += $scope.strips.length;
+
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+    };
 }
 
 angular.module('starter.controllers')
-  .controller('DomainCtrl', DomainCtrl);
+    .controller('DomainCtrl', DomainCtrl);

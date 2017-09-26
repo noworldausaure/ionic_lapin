@@ -1,25 +1,29 @@
 angular.module('starter.services')
-  .factory("Strip", function(Api) {
+  .factory("Strip", function($http, CacheFactory, Api) {
+
+    if (!CacheFactory.get('stripCache')) {
+
+      CacheFactory('stripCache', {
+        maxAge: 60 * 60 * 1000,
+        deleteOnExpire: 'aggressive',
+        storageMode: 'localStorage'
+      });
+
+    }
+
     return {
-      returnNthStrips: function($http, domain, number, offset) {
+      returnNthStrips: function(domain, number, offset) {
+
         offset = typeof offset !== 'undefined' ? offset : 0;
+
         return $http.get(`${Api.baseUrl}strips/${domain}/${number}/${offset}`, {
-          cache: true
+          cache: CacheFactory.get("stripCache")
         });
       },
-      returnAllStrips: function($http, domain) {
-        return $http.get(`${Api.baseUrl}strips/${domain}`, {
-          cache: true
-        });
-      },
-      returnStripsByStories: function($http, domain, id) {
-        return $http.get(`${Api.baseUrl}strips/stories/${domain}/${id}`, {
-          cache: true
-        });
-      },
-      returnStripImage: function($http, domain, id) {
+      returnStripImage: function(domain, id) {
+
         return $http.get(`${Api.baseUrl}strips/image/${domain}/${id}`, {
-          cache: true
+          // cache: CacheFactory.get('stripCache')
         });
       }
     };

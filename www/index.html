@@ -25,6 +25,7 @@
   <link href="assets/css/pub.css" rel="stylesheet">
   <link href="assets/css/story.css" rel="stylesheet">
   <link href="assets/css/strip.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/font/pacifico/stylesheet.css" type="text/css" media="all" />
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -33,7 +34,10 @@
   <script src="lib/ionic/js/ionic.bundle.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
-  <script src="cordova.js"></script>
+  <!--suppress HtmlUnknownTarget -->
+    <script src="cordova.js"></script>
+
+  <script src="lib/angular-cache/dist/angular-cache.min.js"></script>
 </head>
 
 <body ng-app="starter" style='background-color:#F6F6E6' ng-controller="MainCtrl">
@@ -46,7 +50,7 @@
     </ion-nav-back-button>
 
     <ion-nav-buttons side="right">
-      <button class="navbar-menu-button" ng-click="showMenu($event)"></button>
+      <div class="navbar-menu-button" ng-click="showMenu($event)"></div>
     </ion-nav-buttons>
   </ion-nav-bar>
 
@@ -69,6 +73,7 @@
 
   <!-- Common -->
   <script src="app/common/controllers/MainCtrl.js"></script>
+  <script src="app/common/controllers/StripSwiperCtrl.js"></script>
   <script src="app/common/directives/comment.js"></script>
   <script src="app/common/services/api.js"></script>
   <script src="app/common/services/popup.js"></script>
@@ -87,6 +92,9 @@
 
   <!-- Story -->
   <script src="app/story/services/story.js"></script>
+  <script src="app/story/controllers/StoryListCtrl.js"></script>
+  <script src="app/story/controllers/StoryCtrl.js"></script>
+  <script src="app/story/controllers/StorySlideCtrl.js"></script>
 
   <!-- Pub -->
   <script src="app/pub/services/pub.js"></script>
