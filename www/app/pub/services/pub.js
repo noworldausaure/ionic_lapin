@@ -1,15 +1,16 @@
-angular.module('starter.services')
-  .factory("Pub", function(Api) {
+function Pub($http, Api) {
+
     return {
-      returnPubByDomain: function($http, domain) {
-        return $http.get(`${Api.baseUrl}pub/domain/${domain}`, {
-          cache: true
-        });
-      },
-      returnLapinPub: function($http) {
-        return $http.get(`${Api.baseUrl}pub/general`, {
-          cache: true
-        });
-      }
+        returnPubByDomain: function (domain) {
+
+            return $http.get(`${Api.baseUrl}pub/domain/${domain}`);
+        },
+        returnLapinPub: function () {
+
+            return $http.get(`${Api.baseUrl}pub/general`);
+        }
     };
-  });
+}
+
+angular.module('starter.services')
+    .factory("Pub", Pub);

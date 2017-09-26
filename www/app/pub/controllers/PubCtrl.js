@@ -1,16 +1,22 @@
-function PubCtrl($scope, $ionicPopup, Pub) {
+function PubCtrl($scope, Pub) {
 
-  console.log("Init");
-  $scope.$on('$ionicView.beforeEnter', function () {
-      console.log("Popup shown");
+    $scope.loading = true;
+
+    Pub.returnLapinPub().then(function (response) {
+
+        $scope.pub = response.data[0];
+        $scope.loading = false;
+
+        let result = document.getElementsByClassName("popup-title");
+        angular.element(result).html($scope.pub.name);
     });
 
-    $scope.pub = {
-      title: "Title",
-      link: "",
-      file: "",
-    };
+    $scope.openPubLink = function () {
+
+        console.log("open");
+        window.open($scope.pub.link, '_blank');
+    }
 }
 
 angular.module("starter.controllers")
-  .controller("PubCtrl", PubCtrl);
+    .controller("PubCtrl", PubCtrl);

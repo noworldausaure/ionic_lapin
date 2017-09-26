@@ -20,7 +20,6 @@ angular.module('starter')
             })
             .state('strip.pub', {
                 url: '/pub',
-                templateUrl: 'app/strip/views/strip.html',
                 controller: 'PubCtrl',
                 onEnter: function (Popup) {
                     pubPopup = Popup.showPub();

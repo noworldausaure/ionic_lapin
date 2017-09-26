@@ -1,8 +1,12 @@
-function StripSwiperCtrl(child, $scope, domainName, initialStripId, Strip) {
+function StripSwiperCtrl(child, $scope, $state, domainName, initialStripId, Strip) {
+
+    const SHOW_PUB_STRIP_COUNTER = 2;
 
     let lastStripId;
     let firstStripReached = false;
     let lastStripReached = false;
+
+    let pubSlideCount = 0;
 
     // Event listeners on slide modifications
     let tempSlideModifListeners = [];
@@ -66,6 +70,13 @@ function StripSwiperCtrl(child, $scope, domainName, initialStripId, Strip) {
     });
 
     $scope.$on("$ionicSlides.slideChangeEnd", function (event, data) {
+
+        pubSlideCount ++;
+        if(pubSlideCount >= SHOW_PUB_STRIP_COUNTER) {
+
+            pubSlideCount = 0;
+            $state.go('strip.pub');
+        }
 
         // console.log(`slide changed, index=${data.slider.activeIndex}, indexOfLast=${data.slider.slides.length - 1}, end=${data.slider.isEnd}`);
         let index = data.slider.activeIndex;
@@ -187,10 +198,10 @@ function StripSwiperCtrl(child, $scope, domainName, initialStripId, Strip) {
         strip.loading = true;
 
         Strip.returnStripImage(domainName, strip.id)
-            .then(function (stripImage) {
+            .then(function (response) {
 
                 strip.loading = false;
-                strip.file = stripImage.data[0].file;
+                strip.file = response.data[0].file;
             });
     };
 
