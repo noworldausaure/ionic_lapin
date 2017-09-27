@@ -1,0 +1,15 @@
+<ion-view view-title="Histoires de {{ domain }}">
+    <ion-content class="padding">
+
+        <p ui-sref="story_strips({domain: domain, storyId: story.id })" ng-repeat="story in stories | orderBy: ['date', 'id']">
+            {{ story.title }}
+        </p>
+
+        <ion-infinite-scroll
+                ng-if="canLoadMore"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

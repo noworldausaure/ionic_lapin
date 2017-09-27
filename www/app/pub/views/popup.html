@@ -1,0 +1,12 @@
+<div ng-controller="PubCtrl">
+
+    <div ng-show="loading" class="inline-center">
+        <ion-spinner class="spinner-energized"></ion-spinner>
+    </div>
+
+    <div ng-hide="loading">
+        <div ng-click="openPubLink()">
+            <img class="pub-picture" src="data:image/jpeg;base64,{{ pub.file }}">
+        </div>
+    </div>
+</div>

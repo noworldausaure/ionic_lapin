@@ -1,0 +1,22 @@
+<ion-view view-title='Bienvenue sur Lapin.org'>
+    <ion-content class="padding">
+
+        <div class='banner'>
+            <div class='logo'></div>
+        </div>
+
+        <hr class='deco-hr'>
+
+        <div ng-show="loading" class="inline-center">
+            <ion-spinner class="spinner-energized"></ion-spinner>
+        </div>
+
+        <div ng-hide="loading" class='grid-wrapper inline-center'>
+            <div ng-repeat="domain in domains" class="favicon">
+                <img ui-sref="strips({domain: domain.short_name})" src='data:image/jpeg;base64,{{domain.favicon}}'><br/>
+                <span>{{domain.short_name}}</span>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

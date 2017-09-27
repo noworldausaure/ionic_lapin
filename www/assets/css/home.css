@@ -1,0 +1,41 @@
+.banner {
+  background-image: url('../img/banner.png');
+  background-size: 90% 90px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100px;
+  width: 100%;
+}
+
+.banner p {
+  font-family: 'pacifico';
+  text-align: center;
+  font-size: 2em;
+  line-height: 1.5em;
+  padding-top: 30px;
+}
+
+.logo {
+  width: 100px;
+  height: 150px;
+  background-image: url('../img/logo.png');
+  background-repeat: no-repeat;
+  background-size: 90% 100px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+hr {
+  border-style: dashed;
+  border-width: 1px;
+  color: #BF6A27;
+}
+
+.favicon {
+  float: left;
+  margin: 1vw;
+}
+
+#home-author {
+  float: left;
+}
