@@ -17,17 +17,15 @@ h1 {
   height: 300px;
 }
 
-.menu-popover-item {
+.menu-popover-item, .menu-popover-item a {
   border-bottom: dashed 1px #F6F6E6;
-  height: 35px;
-  padding-left: 10px;
-  padding-top: 7px;
-}
-
-.menu-popover-item a {
   color: #F6F6E6;
   font-family: pacificoregular, "Times New Roman", serif;
   font-size: 1.2rem;
+  height: 35px;
+  padding-left: 10px;
+  padding-top: 7px;
+  text-decoration: none;
 }
 
 .navbar-menu-popover :hover {
