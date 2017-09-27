@@ -1,0 +1,11 @@
+.button {
+  background: #be6414;
+  color: #F6F6E6;
+  font-family: pacificoregular, "Times New Roman", serif;
+  font-size: 1.2rem;
+  
+}
+
+.button:hover {
+  color: rgb(0, 200, 175);
+}
