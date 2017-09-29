@@ -69,3 +69,12 @@ ion-content {
     margin: 0 auto;
     padding: 23px;
 }
+
+.domains-container {
+  
+}
+
+.domain-thumbnail {
+  display: inline-block;
+  margin: 1vh 1vw;
+}
