@@ -1,0 +1,80 @@
+h1 {
+    font-size: 25px;
+}
+
+.navbar-menu-button {
+    background-size: 100%;
+    background: url('../img/icons/ic_more_vert_black_24px.svg') no-repeat center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+}
+
+.navbar-menu-popover {
+  background-color: #BF681A;
+  height: 300px;
+}
+
+.menu-popover-item, .menu-popover-item a {
+  border-bottom: dashed 1px #F6F6E6;
+  color: #F6F6E6;
+  font-family: pacificoregular, "Times New Roman", serif;
+  font-size: 1.2rem;
+  height: 35px;
+  padding-left: 10px;
+  padding-top: 7px;
+  text-decoration: none;
+}
+
+.navbar-menu-popover :hover {
+  color: rgb(0, 200, 175);
+}
+
+ion-content {
+    background-color: #F6F6E6;
+}
+
+.font {
+    font-family: 'pacifico', serif;
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
+.lapin-color {
+    color: #BE6414;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+.title-strip {
+    font-size: 2em;
+    line-height: 1.5em;
+    font-family: 'pacifico', serif;
+}
+
+.inline-center {
+    text-align: center;
+}
+
+.block-center {
+    margin: 0 auto;
+}
+
+.grid-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 23px;
+}
+
+.domains-container {
+  
+}
+
+.domain-thumbnail {
+  display: inline-block;
+  margin: 1vh 1vw;
+}
